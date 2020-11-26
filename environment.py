@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 from Utils.img_aug_func import *
 
 from natsort import natsorted
+import glob.glob as glob
 
 import cv2
 
@@ -103,7 +104,7 @@ class Debug_env (General_env):
         return self.raw
 
 def test():
-    path = "Data/Cremi2D/train/A/"
-    pths = natsorted (path)
+    path = "Data/Cremi2D/train/A/*.tif"
+    pths = natsorted (glob.glob (path))
     X_train = read_im (pths)
     print (len (X_train))
