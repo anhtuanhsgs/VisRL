@@ -36,13 +36,13 @@ class General_env ():
         ret = (self.observation (), reward, done, info)
         return ret
 
-    def observation ():
+    def observation (self):
         pass
 
-    def reset ():
+    def reset (self):
         pass
 
-    def reset_end ():
+    def reset_end (self):
         pass
 
     def render (self):
