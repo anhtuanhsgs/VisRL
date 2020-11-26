@@ -61,7 +61,7 @@ class Debug_env (General_env):
         self.gt = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        pritn (self.raw.shape)
+        print (self.raw.shape)
 
         if angle is None:
             angle = self.rng.randint (-30, 30)
