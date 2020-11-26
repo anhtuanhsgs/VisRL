@@ -1,17 +1,20 @@
 import os, sys, glob, time, copy, random
 from os import sys, path
-import cv2
-import numpy as np
 
+import numpy as np
 import skimage.io as io
-from skiamge.transform import roate
+from skimage.transform import rotate
 
 import albumentations as A
 import matplotlib.pyplot as plt
 
+
+
 from Utils.img_aug_func import *
 
 from natsort import natsorted
+
+import cv2
 
 
 class General_env ():
