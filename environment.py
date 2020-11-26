@@ -109,7 +109,10 @@ def test():
     X_train = read_im (pths)
     X_train = [X_train [0]]
 
-    config = {}
+    config = {
+        "T": 10,
+        "size": X_train [0].shape,
+    }
     env = Debug_env (X_train, config)
     obs = env.reset ()
 
