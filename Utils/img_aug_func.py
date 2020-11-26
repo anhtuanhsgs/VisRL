@@ -3,7 +3,6 @@ from scipy.ndimage.interpolation    import map_coordinates
 # Array and image processing toolboxes
 import numpy as np 
 import skimage
-import skimage.io
 import skimage.transform
 import skimage.segmentation
 from skimage import io
@@ -72,26 +71,26 @@ def random_blackout (image, n, randt, range_xy = (50, 256)):
     return image
 
 
-def rotate(image, n):
-    assert ((image.ndim == 2) | (image.ndim == 3))
-    assert (n < 4)        
-    rot_k = n
-    rotated = image.copy()
-    if image.ndim==2:
-        rotated = np.rot90(image, rot_k, axes=(0,1))
-    elif image.ndim==3:
-        rotated = np.rot90(image, rot_k, axes=(1,2))
-    image = rotated
-    return image
+# def rotate(image, n):
+#     assert ((image.ndim == 2) | (image.ndim == 3))
+#     assert (n < 4)        
+#     rot_k = n
+#     rotated = image.copy()
+#     if image.ndim==2:
+#         rotated = np.rot90(image, rot_k, axes=(0,1))
+#     elif image.ndim==3:
+#         rotated = np.rot90(image, rot_k, axes=(1,2))
+#     image = rotated
+#     return image
 
-def rotate3D (image, n):
-    rot_k1 = n // 16
-    rot_k2 = (n % 16) // 4
-    rot_k3 = (n % 4)
-    rotated = np.rot90(image, rot_k1, axes=(0,1))
-    rotated = np.rot90(image, rot_k2, axes=(0,2))
-    rotated = np.rot90(image, rot_k3, axes=(1,2))
-    return rotated
+# def rotate3D (image, n):
+#     rot_k1 = n // 16
+#     rot_k2 = (n % 16) // 4
+#     rot_k3 = (n % 4)
+#     rotated = np.rot90(image, rot_k1, axes=(0,1))
+#     rotated = np.rot90(image, rot_k2, axes=(0,2))
+#     rotated = np.rot90(image, rot_k3, axes=(1,2))
+#     return rotated
 
 
 def reverse(image, n):
