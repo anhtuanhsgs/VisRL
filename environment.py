@@ -87,7 +87,7 @@ class Debug_env (General_env):
 
         old_angle = self.angle
         if action == 1:
-            self.angle = self.angle + self.rots [action]
+            self.angle += self.rots [action]
         self.raw = rotate (self.raw, self.rots [action])
 
         reward = (0 - old_angle) - (0 - self.angle)
@@ -124,7 +124,7 @@ def test():
     for i in range (10):
         action = int (input ())
         obs, reward, done, info = env.step (action)
-        print (reward)
+        print ("rew: ", reward, "rot: ", env.angle)
         plt.imshow (obs)
         plt.show ()
 
