@@ -3,7 +3,7 @@ from os import sys, path
 import cv2
 import numpy as np
 
-from skimage.io import io
+import skimage.io as io
 from skiamge.transform import roate
 
 import albumentations as A
