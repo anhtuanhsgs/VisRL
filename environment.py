@@ -123,7 +123,7 @@ def test():
 
     for i in range (10):
         action = int (input ())
-        obs, rew, done, info = env.step (action)
+        obs, reward, done, info = env.step (action)
         print (reward)
         plt.imshow (obs)
         plt.show ()
