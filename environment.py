@@ -87,9 +87,10 @@ class Debug_env (General_env):
 
         old_angle = self.angle
         self.angle += self.rots [action]
-        self.raw = rotate (self.raw, self.rots [action])
+        # self.raw = rotate (self.raw, self.rots [action])
+        self.raw = rate (self.gt, self.angle)
 
-        reward = (0 - old_angle) - (0 - self.angle)
+        reward = - (0 - old_angle) + (0 - self.angle)
         info = {}
 
         self.sum_rewards += reward
