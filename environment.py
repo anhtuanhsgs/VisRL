@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 
 from Utils.img_aug_func import *
 
+from natsort import natsorted
+
 
 class General_env ():
     def init (self, config):
@@ -97,7 +99,8 @@ class Debug_env (General_env):
     def render (self):
         return self.raw
 
-def test_env ():
+def test():
     path = "Data/Cremi2D/train/A/"
-    X_train = read_im (path_)
+    pths = natsorted (path)
+    X_train = read_im (pths)
     print (len (X_train))
