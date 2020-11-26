@@ -53,7 +53,7 @@ class Debug_env (General_env):
     def __init__ (self, raw_list, config, seed=0):
         self.init (config)
         self.raw_list = raw_list
-        self.rots = [-5, 5]
+        self.rots = [-10, 10]
         self.seed (seed)
 
     def reset (self, angle=None):
@@ -124,6 +124,7 @@ def test():
     for i in range (10):
         action = int (input ())
         obs, rew, done, info = env.step (action)
+        print (reward)
         plt.imshow (obs)
         plt.show ()
 
