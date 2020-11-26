@@ -107,4 +107,19 @@ def test():
     path = "Data/Cremi2D/train/A/*.tif"
     pths = natsorted (glob (path))
     X_train = read_im (pths)
+    X_train = [X_train [0]]
+
+    config = {}
+    env = Debug_env (X_train, config)
+    obs = env.reset ()
+
+    plt.imshow (obs)
+    plt.show ()
+
+    for i in range (10):
+        action = int (input ())
+        obs, rew, done, info = env.step (action)
+        plt.imshow (obs)
+        plt.show ()
+
     print (len (X_train))
