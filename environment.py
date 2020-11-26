@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from Utils.img_aug_func import *
 
 from natsort import natsorted
-import glob.glob as glob
+from glob import glob
 
 import cv2
 
