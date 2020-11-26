@@ -86,8 +86,7 @@ class Debug_env (General_env):
             return ret
 
         old_angle = self.angle
-        if action == 1:
-            self.angle += self.rots [action]
+        self.angle += self.rots [action]
         self.raw = rotate (self.raw, self.rots [action])
 
         reward = (0 - old_angle) - (0 - self.angle)
