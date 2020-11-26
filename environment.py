@@ -105,6 +105,6 @@ class Debug_env (General_env):
 
 def test():
     path = "Data/Cremi2D/train/A/*.tif"
-    pths = natsorted (glob.glob (path))
+    pths = natsorted (glob (path))
     X_train = read_im (pths)
     print (len (X_train))
