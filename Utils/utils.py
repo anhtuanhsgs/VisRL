@@ -32,7 +32,7 @@ def vols2list (vols):
             ret += [img]
     return ret
 
-def get_data (path, relabel, data_channel=1):
+def get_data (path, data_channel=1):
     train_path = natsorted (glob.glob(path + 'A/*.tif'))
     train_label_path = natsorted (glob.glob(path + 'B/*.tif'))
     train_path += natsorted (glob.glob (path + "A/*.npy"))
