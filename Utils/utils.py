@@ -5,6 +5,7 @@ from skimage.measure import label
 from skimage.transform import resize
 from skimage.morphology import binary_dilation, binary_erosion, disk, ball
 from skimage import img_as_bool
+from natsort import natsorted
 import cv2
 import math as m
 
