@@ -33,6 +33,18 @@ def color_generator (N):
         return lbl
     return lbl2rgb
 
+def read_imgs_from_path (path):
+    ret = []
+    paths = glob.glob (path + "/*")
+    for pth in paths:
+        is_img = False
+        for extension in ["tif", "png"]:
+            if extension in pth:
+                is_img = True
+        if is_img:
+            ret.append (io.imread (pth))
+    return ret
+
 def read_im (paths):
     ret = []
     for path in paths:

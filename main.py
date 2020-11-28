@@ -10,6 +10,8 @@ from natsort import natsorted
 from Utils.img_aug_func import *
 from Utils.utils import *
 
+from Models.models import *
+
 parser = argparse.ArgumentParser(description='A3C')
 parser.add_argument(
     '--env',
@@ -166,6 +168,12 @@ parser.add_argument (
 )
 
 parser.add_argument (
+    '--feats',
+    type=int, nargs='+',
+    default=[32, 32, 64, 64, 1024],
+    )
+
+parser.add_argument (
     '--valid-gpu',
     type=int,
     default=-1,
@@ -182,31 +190,35 @@ parser.add_argument (
     action="store_true"
 )
 
+parser.add_argument (
+    "--num-actions",
+    type=int,
+    default=2,
+)
+
 def setup_env_conf (args):
     env_conf = {
-
+        "data": args.data,
+        "T": args.max_episode_length,
+        "size": args.size,
+        "DEBUG": args.DEBUG,
+        "size": args.size,
     }
+
+    env_conf ["obs_shape"] = [args.data_channel] + env_conf ["size"]
+
+    args.env += "_" + args.model
 
     return env_conf
 
-def setup_data (args):
+def setup_data (args, set_type):
     path_test = None
     if args.data == "cremi":
-        path_train = "Data/Cremi2D/train/"
-        path_train = "Data/Cremi2D/train/"
-        path_test = "Data/Cremi2D/train/"
-        args.data_channel = 1
-        args.test_lbl = True
+        datasets = {}
+        raw = read_imgs_from_path ("Data/Cremi2D/" + set_type + "/A/")
+        datasets = (raw)
 
-
-    raw, gt = get_data (path=path_train, data_channel=args.data_channel)
-    raw_val, gt_val =  get_data (path=path_valid, data_channel=args.data_channel)
-    raw_test, gt_test = None, None
-
-    print ("train: ", len (raw), raw [0].shape)
-    print ("valid: ", len (raw_valid), raw_valid [0].shape)
-
-    return raw, gt, raw_val, gt_val, raw_test, gt_test
+    return datasets
 
 def main (scripts, args):
     scripts = " ".join (sys.argv[0:])
@@ -218,58 +230,56 @@ def main (scripts, args):
     torch.cuda.manual_seed(args.seed)
     mp.set_start_method('spawn')
 
-    raw, gt, raw_val, gt_val, raw_test, gt_test = setup_data (args)
+    if not args.deploy:
+        train_datasets = setup_data (args, "train")
+        valid_datasets = setup_data (args, "valid")
 
-    print (len (raw), raw[0].shape)
+    env_conf = setup_env_conf (args)
+    shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
+                                    num_actions=args.num_actions)
 
-    # shared_model = get_model (args)
+    if args.load:   
+        saved_state = torch.load(
+            args.load,
+            map_location=lambda storage, loc: storage)
+        shared_model.load_state_dict(saved_state)
+    if not args.deploy:
+        shared_model.share_memory()
 
-    # if args.load:   
-    #     saved_state = torch.load(
-    #         args.load,
-    #         map_location=lambda storage, loc: storage)
-    #     shared_model.load_state_dict(saved_state)
-    # if not args.deploy:
-    #     shared_model.share_memory()
+    if args.deploy:
+        test_datasets = setup_data (args, "test")
+        p = mp.Process(target=test_func, args=(args, shared_model, env_conf, test_datasets))
+        p.start()
+        exit ()
 
-    # if args.deploy:
-    #     print ("NOT IMPLEMENTED")
-    #     pass
-    #     exit ()
+    if args.shared_optimizer:
+        if args.optimizer == 'RMSprop':
+            optimizer = SharedRMSprop(shared_model.parameters(), lr=args.lr)
+        if args.optimizer == 'Adam':
+            optimizer = SharedAdam(
+                shared_model.parameters(), lr=args.lr, amsgrad=args.amsgrad)
+        optimizer.share_memory()
+    else:
+        optimizer = None
 
-    # if args.shared_optimizer:
-    #     if args.optimizer == 'RMSprop':
-    #         optimizer = SharedRMSprop(shared_model.parameters(), lr=args.lr)
-    #     if args.optimizer == 'Adam':
-    #         optimizer = SharedAdam(
-    #             shared_model.parameters(), lr=args.lr, amsgrad=args.amsgrad)
-    #     optimizer.share_memory()
-    # else:
-    #     optimizer = None
-
-
-    # processes = []
-    # if not args.no_test:
-    #     if raw_test is not None:
-    #         p = mp.Process(target=test_func, args=(args, shared_model, env_conf, [raw_valid, gt_lbl_valid], (raw_test, gt_lbl_test), shared_dict))
-    #     else:
-    #         p = mp.Process(target=test_func, args=(args, shared_model, env_conf, [raw_valid, gt_lbl_valid], None, shared_dict))
-    #     p.start()
-    #     processes.append(p)
+    processes = []
+    p = mp.Process(target=test_func, args=(args, shared_model, env_conf, valid_datasets))
+    p.start()
+    processes.append(p)
     
-    # time.sleep(0.1)
+    time.sleep(0.1)
 
-    # for rank in range(0, args.workers):
-    #     p = mp.Process(
-    #         target=train_func, args=(rank, args, shared_model, optimizer, env_conf, [raw, gt_lbl], shared_dict))
+    for rank in range(0, args.workers):
+        p = mp.Process(
+            target=train_func, args=(rank, args, shared_model, optimizer, env_conf, train_datasets))
 
-    #     p.start()
-    #     processes.append(p)
-    #     time.sleep(0.1)
+        p.start()
+        processes.append(p)
+        time.sleep(0.1)
 
-    # for p in processes:
-    #     time.sleep(0.1)
-    #     p.join()
+    for p in processes:
+        time.sleep(0.1)
+        p.join()
 
 if __name__ == '__main__':
     scripts = " ".join (sys.argv[0:])

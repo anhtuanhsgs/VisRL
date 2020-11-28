@@ -50,9 +50,9 @@ class General_env ():
 
 
 class Debug_env (General_env):
-    def __init__ (self, raw_list, config, seed=0):
+    def __init__ (self, datasets, config, seed=0):
         self.init (config)
-        self.raw_list = raw_list
+        self.raw_list = datasets [0]
         self.rots = [-10, 10]
         self.seed (seed)
 
