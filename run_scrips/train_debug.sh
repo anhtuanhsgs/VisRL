@@ -1,5 +1,4 @@
 cat $0
-
 python main.py --env DEBUG \
 --gpu-di 0 1 2 3 --workers 4 --valid-gpu 0 \
 --num-steps 3 --max-episode-lenghts 3 \
