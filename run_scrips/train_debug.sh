@@ -5,7 +5,7 @@ python main.py --env DEBUG \
 --lr 1e-4 \
 --num-steps 3 --max-episode-length 3 \
 --size 32 32 \
---feats 64 64 128 128 1024 \
+--feats 64 64 128 128 512 \
 --save-period 100 --log-period 5 --train-log-period 100 \
 --log-dir logs/Dec2020/ --save-model-dir logs/trained_models/Dec2020/ \
 \
