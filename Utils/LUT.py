@@ -30,6 +30,8 @@ class LUT ():
             self.table [r][2] += self.rng.randint (-1, 1) * 60
             self.table [r][2] = self.clip (self.table [r][2])
             self.linear_adjust_r (l, r)
+        l = i * step, r = 255
+        self.linear_adjust_r (l, r)
 
     def linear_adjust_r (self, l, r):
         unit = (self.table [r][2] - self.table[l][2]) // (r - l)
