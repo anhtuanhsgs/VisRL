@@ -4,7 +4,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 import argparse
 import torch
 import torch.multiprocessing as mp
-from environment import *
+from environment import Debug_env
 from natsort import natsorted
 
 from Utils.img_aug_func import *

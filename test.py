@@ -1,7 +1,7 @@
 from __future__ import division
 from setproctitle import setproctitle as ptitle
 import torch
-from environment import *
+from environment import Debug_env
 from Models.models import *
 from player_util import Agent
 from torch.autograd import Variable

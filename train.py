@@ -2,7 +2,7 @@ from __future__ import division
 from setproctitle import setproctitle as ptitle
 import torch
 import torch.optim as optim
-from environment import *
+from environment import Debug_env
 from Utils.utils import ensure_shared_grads, EspTracker
 from Models.models import *
 from player_util import Agent
