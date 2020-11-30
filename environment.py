@@ -77,6 +77,9 @@ class Debug_env (General_env):
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
+        self.lut = LUT (rng=self.rng)
+        self.ref_lut = LUT (rng=self.rng)
+
         self.ref_lut.rand_mod ()
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
