@@ -87,7 +87,7 @@ class Debug_env (General_env):
 
     def step (self, action):
         done = False
-        if (self.step_cnt > self.T):
+        if (self.step_cnt >= self.T):
             done = True
 
         rewards = np.zeros ([len (action)], dtype=np.float32)
@@ -106,6 +106,7 @@ class Debug_env (General_env):
         self.sum_rewards += rewards
         info = {}
         ret = (self.observation (), rewards, done, info)
+        self.step_cnt += 1
         return ret
 
     def observation (self):
