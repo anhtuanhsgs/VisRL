@@ -9,7 +9,6 @@ import time, os
 import logging
 from Utils.Logger import Logger
 from Utils.utils import create_dir
-from Utils.metrics import GetDices, DiffFGLabels, kitti_metric
 from Utils.utils import ScalaTracker, Scheduler
 import numpy as np
 import cv2
