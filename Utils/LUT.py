@@ -10,6 +10,7 @@ class LUT ():
             self.table [i] = np.array ([i, i, i])
         self.n = 2
         self.step = 256 // (self.n + 1)
+        self.mod = np.zeros ((self.n), dtype=np.int32)
 
     def apply (self, img):
         ret = self.table [img]
@@ -27,8 +28,10 @@ class LUT ():
             l = i * step
             r = (i + 1) * step
             print ("left:, ", l, "right: ", r)
-            self.table [r][2] += self.rng.randint (-1, 1) * 60
+            mod = self.rng.randint (-1, 1) * 60
+            self.table [r][2] += mod
             self.table [r][2] = self.clip (self.table [r][2])
+            self.mod [i] = mod
             self.linear_adjust_r (l, r)
         l = (self.n - 1) * step; r = 255
         self.linear_adjust_r (l, r)
