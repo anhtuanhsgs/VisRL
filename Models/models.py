@@ -22,7 +22,7 @@ class outconv(nn.Module):
 class ActorCritic (nn.Module):
     def __init__ (self, args, backbone1, backbone2, num_actions):
         super (ActorCritic, self).__init__ ()
-        self.name = backbone.name
+        self.name = backbone1.name
         
         self.backbone1 = backbone1
         self.backbone2 = backbone2
