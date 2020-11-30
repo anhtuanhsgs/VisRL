@@ -141,3 +141,5 @@ def test():
         plt.show ()
 
     print (len (X_train))
+
+test ()
