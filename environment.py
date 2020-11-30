@@ -108,7 +108,7 @@ class Debug_env (General_env):
         return self.lut (self.raw)
 
 def test():
-    path = "Data/Random/train/A/*.tif"
+    path = "Data/Random/train/A/*.png"
     pths = natsorted (glob (path))
     X_train = read_im (pths)
     X_train = [X_train [0]]
