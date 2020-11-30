@@ -72,8 +72,8 @@ def get_model (args, name, input_shape, num_actions):
     if name == "ENet":
         inp_shape_split = copy.deepcopy (input_shape)
         inp_shape_split [0] //= 2
-        backbone1 = ENet (in_dims=input_shape, feats=args.feats)
-        backbone2 = ENet (in_dims=input_shape, feats=args.feats)
+        backbone1 = ENet (in_dims=inp_shape_split, feats=args.feats)
+        backbone2 = ENet (in_dims=inp_shape_split, feats=args.feats)
         model =  ActorCritic (args, backbone1, backbone2, num_actions)
 
     return model
