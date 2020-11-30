@@ -108,7 +108,7 @@ class Debug_env (General_env):
         return self.lut (self.raw)
 
 def test():
-    path = "Data/Cremi2D/train/A/*.tif"
+    path = "Data/Random/train/A/*.tif"
     pths = natsorted (glob (path))
     X_train = read_im (pths)
     X_train = [X_train [0]]
@@ -116,17 +116,26 @@ def test():
     config = {
         "T": 10,
         "size": X_train [0].shape,
+        "obs_shape": [1, 32, 32],
+        "num_actions": 2,
     }
-    
+
     env = Debug_env (X_train, config)
     obs = env.reset ()
+
+    fig, ax = plt.subplots (1, 3)
+
+    ax [0, 1].show (env.raw)
+    ax [0, 2].show (env.ref)
+    ax [0, 3].show (env.observation ())
 
     plt.imshow (obs)
     plt.show ()
 
     for i in range (10):
-        action = int (input ())
-        obs, reward, done, info = env.step (action)
+        inp = input ()
+        actions = [int (inp [0]), int (inp [1])]
+        obs, reward, done, info = env.step (actions)
         print ("rew: ", reward, "rot: ", env.angle)
         plt.imshow (obs)
         plt.show ()

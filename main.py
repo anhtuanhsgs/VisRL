@@ -219,10 +219,12 @@ def setup_data (args, set_type):
     if args.data == "cremi":
         raw = read_imgs_from_path ("Data/Cremi2D/" + set_type + "/A/")
         datasets = (raw)
+        args.data_channel = 1
 
     if args.data == "Random":
         raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
         datasets = (raw)
+        args.data_channel = 1
 
     return datasets
 

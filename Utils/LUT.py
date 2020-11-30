@@ -17,7 +17,7 @@ class LUT ():
 
     def update (self, i, amount):
         self.table [i][2] += amount
-        self.table [i][2] = min (max (self.table[i][2], 255), 0)
+        self.table [i][2] = self.clip (self.table [i][2])
 
     def rand_mod (self, img):
         if rng is None:
@@ -28,7 +28,7 @@ class LUT ():
             l = i * step
             r = (i + 1) * step
             self.table [r][2] += self.rng.randint (-1, 1) * 30
-            self.table [r][2] = min (max (self.table[r][2], 255), 0)
+            self.table [r][2] = self.clip (self.table [r][2])
             self.linear_adjust_r (l, r)
 
     def linear_adjust_r (self, l, r):
@@ -36,9 +36,12 @@ class LUT ():
         for i in range (l, r):
             self.table [i][2] += (i - l) * unit
 
+    def clip (self, x, l=0, r=255):
+        return max (min (255, x), 0)
+
     def modify (self, i, val):
         self.table [(i + 1) * step][2] = val
-        step = self.step
+        l = self.clip (i * step); r = self.clip ((i + 1) * step)
         linear_adjust_r (i * step, (i + 1) * step)
         linear_adjust_r ((i + 1) * step, (i + 2) * step)
 
