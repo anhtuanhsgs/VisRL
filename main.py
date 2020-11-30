@@ -209,7 +209,7 @@ def setup_env_conf (args):
         "num_actions": args.num_actions,
     }
 
-    env_conf ["obs_shape"] = [args.data_channel * 2] + env_conf ["size"]
+    env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
 
     args.env += "_" + args.model
 
