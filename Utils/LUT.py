@@ -20,8 +20,7 @@ class LUT ():
         self.table [i][2] = self.clip (self.table [i][2])
 
     def rand_mod (self):
-        if rng is None:
-            rng = np.random
+        rng = self.rng
         n = self.n
         step = self.step
         for i in range (n):
