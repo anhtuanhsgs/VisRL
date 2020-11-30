@@ -21,7 +21,7 @@ class ENet (nn.Module):
         H_dim = m.ceil (in_dims [1] / 16) - 1
         self.out_dim = feats [-1]
 
-        self.latern = nn.Linear (H_dim * H_dim * 64, feats[-1])
+        self.latern = nn.Linear (H_dim * H_dim * feats [-2], feats[-1])
         
 
     def forward (self, x):
