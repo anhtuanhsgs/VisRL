@@ -28,7 +28,7 @@ class LUT ():
             self.table [r][2] = self.clip (self.table [r][2])
             self.mod [i] = mod
             self.linear_adjust_r (l, r)
-        l = (self.n - 1) * step; r = 255
+        l = n * step; r = 255
         self.linear_adjust_r (l, r)
 
     def linear_adjust_r (self, l, r):
