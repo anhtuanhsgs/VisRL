@@ -141,7 +141,7 @@ def test_func (args, shared_model, env_conf, datasets):
                 print ("action: ", player.env.action)
                 print ("------------------------------------------------")
 
-                log_img = np.concatenate (renderlist [1:2], 0)
+                log_img = np.concatenate (renderlist, 0)
                 log_info = {"valid_sample": log_img}
 
 
