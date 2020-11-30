@@ -7,7 +7,7 @@ import skimage.transform
 import skimage.segmentation
 from skimage import io
 from scipy.ndimage.filters import gaussian_filter as gaussian
-import time
+import time, glob
 from scipy.ndimage.morphology import binary_erosion
 from skimage.segmentation import find_boundaries
 from random import shuffle
