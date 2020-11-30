@@ -119,8 +119,7 @@ class Debug_env (General_env):
         ref = self.ref_lut.apply (self.ref) 
         img = np.concatenate ([raw, ref], 1)
         img = img.astype (np.uint8)
-        return self.lut.apply (self.raw)
-
+        return img
 def test():
     path = "Data/Random/train/A/*.png"
     pths = natsorted (glob (path))
