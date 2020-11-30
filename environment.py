@@ -102,10 +102,10 @@ class Debug_env (General_env):
         return ret
 
     def observation (self):
-        return self.lut (self.raw)
+        return self.lut.apply (self.raw)
 
     def render (self):
-        return self.lut (self.raw)
+        return self.lut.apply (self.raw)
 
 def test():
     path = "Data/Random/train/A/*.png"
