@@ -102,7 +102,7 @@ class Debug_env (General_env):
             rewards [i] += old_diff - new_diff
 
         self.sum_rewards += rewards
-
+        info = {}
         ret = (self.observation (), rewards, done, info)
         return ret
 
