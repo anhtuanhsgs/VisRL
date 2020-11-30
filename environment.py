@@ -102,7 +102,7 @@ class Debug_env (General_env):
         return ret
 
     def observation (self):
-        return self.lut.apply (self.raw)
+        return (self.lut.apply (self.raw), self.ref_lut.apply (self.ref))
 
     def render (self):
         return self.lut.apply (self.raw)
