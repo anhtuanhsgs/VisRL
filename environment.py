@@ -107,7 +107,10 @@ class Debug_env (General_env):
         return ret
 
     def observation (self):
-        return (self.lut.apply (self.raw), self.ref_lut.apply (self.ref))
+        raw = self.lut.apply (self.raw) [None]
+        ref = self.ref_lut.apply (self.ref) [None]
+        obs = np.concatenate ([raw, ref], 0)
+        return obs
 
     def render (self):
         return self.lut.apply (self.raw)
