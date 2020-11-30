@@ -65,6 +65,8 @@ class Debug_env (General_env):
         self.lut = LUT (rng=self.rng)
         self.ref_lut = LUT (rng=self.rng)
 
+        self.step_cnt = 0
+
         self.seed (seed)
 
     def reset (self, angle=None):
@@ -76,6 +78,7 @@ class Debug_env (General_env):
 
         self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
+        self.step_cnt = 0
 
         self.reset_end ()
         return self.observation ()
@@ -90,9 +93,9 @@ class Debug_env (General_env):
         for i in range (len (action)):
             old_diff = self.lut.cmp (self.ref_lut, i)
             if (action [i] == 0):
-                self.lut.update (i, -10 * 3)
+                self.lut.update (i, -20)
             if (action [i] == 1):
-                self.lut.update (i, +10 * 3)
+                self.lut.update (i, +20)
             new_diff = self.lut.cmp (self.ref_lut, i)
             rewards [i] += old_diff - new_diff
 
@@ -116,7 +119,7 @@ def test():
     print (len (X_train), X_train [0].shape)
 
     config = {
-        "T": 10,
+        "T": 3,
         "size": X_train [0].shape,
         "obs_shape": [1, 32, 32],
         "num_actions": 2,
