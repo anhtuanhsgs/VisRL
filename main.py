@@ -12,6 +12,9 @@ from Utils.utils import *
 
 from Models.models import *
 
+from test import test_func
+from train import train_func
+
 parser = argparse.ArgumentParser(description='A3C')
 parser.add_argument(
     '--env',
