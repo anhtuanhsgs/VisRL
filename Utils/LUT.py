@@ -41,6 +41,7 @@ class LUT ():
         return max (min (255, x), 0)
 
     def modify (self, i, amount):
+        step = self.step
         self.table [(i + 1) * step][2] += amount
         l = self.clip (i * step); r = self.clip ((i + 1) * step)
         linear_adjust_r (i * step, (i + 1) * step)
