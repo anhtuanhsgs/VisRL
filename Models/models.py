@@ -54,7 +54,7 @@ class ActorCritic (nn.Module):
 
 
         critic = critic.view (critic.size (0), 1, self.num_actions)
-        actor = actor.view (c)
+        actor = actor.view (actor.size (0), 2, self.num_actions)
         
         if self.use_lstm:
             ret = (critic, actor, (hx, cx))
