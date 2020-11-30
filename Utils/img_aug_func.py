@@ -48,7 +48,7 @@ def read_imgs_from_path (path):
 def read_im (paths):
     ret = []
     for path in paths:
-        elif ".tif" in path or ".png" in path:
+        if ".tif" in path or ".png" in path:
             ret.append (io.imread (path))
         elif ".npy" in path:
             print (path)
