@@ -103,7 +103,7 @@ class Debug_env (General_env):
 
         self.sum_rewards += rewards
 
-        ret = (self.observation (), reward, done, info)
+        ret = (self.observation (), rewards, done, info)
         return ret
 
     def observation (self):
