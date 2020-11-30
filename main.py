@@ -173,7 +173,7 @@ parser.add_argument (
 parser.add_argument (
     '--feats',
     type=int, nargs='+',
-    default=[32, 32, 64, 64, 1024],
+    default=[32, 32, 64, 64, 512],
     )
 
 parser.add_argument (
