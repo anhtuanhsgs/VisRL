@@ -19,7 +19,7 @@ class LUT ():
         self.table [i][2] += amount
         self.table [i][2] = self.clip (self.table [i][2])
 
-    def rand_mod (self, img):
+    def rand_mod (self):
         if rng is None:
             rng = np.random
         n = self.n
