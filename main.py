@@ -203,6 +203,7 @@ def setup_env_conf (args):
         "size": args.size,
         "DEBUG": args.DEBUG,
         "size": args.size,
+        "num_actions": args.num_actions,
     }
 
     env_conf ["obs_shape"] = [args.data_channel] + env_conf ["size"]
@@ -213,9 +214,14 @@ def setup_env_conf (args):
 
 def setup_data (args, set_type):
     path_test = None
+    datasets = {}    
+
     if args.data == "cremi":
-        datasets = {}
         raw = read_imgs_from_path ("Data/Cremi2D/" + set_type + "/A/")
+        datasets = (raw)
+
+    if args.data == "Random":
+        raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
         datasets = (raw)
 
     return datasets

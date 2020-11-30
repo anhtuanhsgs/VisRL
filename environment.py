@@ -8,7 +8,7 @@ from skimage.transform import rotate
 import albumentations as A
 import matplotlib.pyplot as plt
 
-
+from Utils.LUT import LUT
 
 from Utils.img_aug_func import *
 
@@ -22,6 +22,8 @@ class General_env ():
     def init (self, config):
         self.T = config ['T']
         self.size = config ['size']
+        self.obs_shape = config ['obs_shape']
+
         self.rng = np.random.RandomState (time_seed ())
         pass
 
@@ -52,24 +54,27 @@ class General_env ():
 class Debug_env (General_env):
     def __init__ (self, datasets, config, seed=0):
         self.init (config)
+
         self.raw_list = datasets [0]
-        self.rots = [-10, 10]
+        self.ref_list = None
+
+        self.raw = None
+        self.ref = None
+
+        self.num_actions = config ["num_actions"]
+        self.lut = LUT (rng=self.rng)
+        self.ref_lut = LUT (rng=self.rng)
+
         self.seed (seed)
 
     def reset (self, angle=None):
         idx = self.rng.randint (len (self.raw_list))
-        self.gt = copy.deepcopy (self.raw_list [idx])
+        self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        print (self.raw.shape)
+        self.ref_lut.rand_mod (n=2)
 
-        if angle is None:
-            angle = self.rng.randint (-30, 30)
-            self.angle = angle
-            self.raw = rotate (self.raw, angle)
-        self.angle = angle
-
-        self.sum_rewards = 0
+        self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
 
         self.reset_end ()
@@ -77,33 +82,30 @@ class Debug_env (General_env):
 
     def step (self, action):
         done = False
-
-        if action == len (self.rots):
+        if (self.step_cnt > self.T):
             done = True
-            reward = 0
-            info = {}
-            ret = (self.observation (), reward, done, info)
-            return ret
 
-        old_angle = self.angle
-        self.angle += self.rots [action]
-        # self.raw = rotate (self.raw, self.rots [action])
-        self.raw = rotate (self.gt, self.angle)
+        rewards = np.zeros ([len (action)], dtype=np.float32)
 
-        reward = - (0 - old_angle) + (0 - self.angle)
-        info = {}
+        for i in range (len (action)):
+            old_diff = self.lut.cmp (self.ref_lut, i)
+            if (action [i] == 0):
+                self.lut.update (i, -10)
+            if (action [i] == 1):
+                self.lut.update (i, +10)
+            new_diff = self.lut.cmp (self.ref_lut, i)
+            rewards [i] += old_diff - new_diff
 
         self.sum_rewards += reward
-        self.rewards.append (reward)
 
         ret = (self.observation (), reward, done, info)
         return ret
 
     def observation (self):
-        return self.raw
+        return self.lut (self.raw)
 
     def render (self):
-        return self.raw
+        return self.lut (self.raw)
 
 def test():
     path = "Data/Cremi2D/train/A/*.tif"
@@ -115,6 +117,7 @@ def test():
         "T": 10,
         "size": X_train [0].shape,
     }
+    
     env = Debug_env (X_train, config)
     obs = env.reset ()
 

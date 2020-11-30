@@ -163,7 +163,6 @@ def RotFlipRev3D (volumes, rng):
     ret = [reverse (vol, nRev) for vol in ret]
     return ret
 
-
 def FlipRev3D (volumes, rng):
     volumes = [np.copy (vol) for vol in volumes]
     nFlip = rng.randint (4)
