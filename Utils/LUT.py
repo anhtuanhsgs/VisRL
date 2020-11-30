@@ -16,10 +16,6 @@ class LUT ():
         ret = self.table [img]
         return ret
 
-    def update (self, i, amount):
-        self.table [i][2] += amount
-        self.table [i][2] = self.clip (self.table [i][2])
-
     def rand_mod (self):
         rng = self.rng
         n = self.n
@@ -44,8 +40,8 @@ class LUT ():
     def clip (self, x, l=0, r=255):
         return max (min (255, x), 0)
 
-    def modify (self, i, val):
-        self.table [(i + 1) * step][2] = val
+    def modify (self, i, amount):
+        self.table [(i + 1) * step][2] += amount
         l = self.clip (i * step); r = self.clip ((i + 1) * step)
         linear_adjust_r (i * step, (i + 1) * step)
         linear_adjust_r ((i + 1) * step, (i + 2) * step)
