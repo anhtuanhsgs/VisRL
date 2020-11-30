@@ -12,7 +12,7 @@ class LUT ():
         self.step = 256 // (self.n + 1)
 
     def apply (self, img):
-        ret = self.table (img)
+        ret = self.table [img]
         return ret
 
     def update (self, i, amount):
