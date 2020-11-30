@@ -76,6 +76,8 @@ class Debug_env (General_env):
 
         self.ref_lut.rand_mod ()
 
+        self.diff_t0 = self.ref_lut.table - self.lut.table
+
         self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
         self.step_cnt = 0
@@ -99,7 +101,7 @@ class Debug_env (General_env):
             new_diff = self.lut.cmp (self.ref_lut, i)
             rewards [i] += old_diff - new_diff
 
-        self.sum_rewards += reward
+        self.sum_rewards += rewards
 
         ret = (self.observation (), reward, done, info)
         return ret
