@@ -86,6 +86,7 @@ class Debug_env (General_env):
         return self.observation ()
 
     def step (self, action):
+        self.action = action
         done = False
         if (self.step_cnt >= self.T):
             done = True

@@ -37,7 +37,7 @@ def deploy (args, shared_model, player, gpu_id):
 
         player.action_test ()    
         tot_num_calculation += np.sum (player.env.action)
-        print ("number of patches processed: ", np.sum (player.env.action))
+        # print ("number of patches processed: ", np.sum (player.env.action))
         result = np.zeros ((2560, 2560), dtype=np.int32)
         for pred_layer in player.env.pred_list:
             labeled = label (pred_layer > 128) + np.max (result) * (pred_layer > 128)
