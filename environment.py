@@ -101,18 +101,24 @@ class Debug_env (General_env):
             new_diff = self.lut.cmp (self.ref_lut, i)
             rewards [i] += old_diff - new_diff
 
+        rewards /= 20
+
         self.sum_rewards += rewards
         info = {}
         ret = (self.observation (), rewards, done, info)
         return ret
 
     def observation (self):
-        raw = self.lut.apply (self.raw) [None]
-        ref = self.ref_lut.apply (self.ref) [None]
+        raw = np.transpose (self.lut.apply (self.raw), [2, 0, 1])
+        ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
         obs = np.concatenate ([raw, ref], 0)
         return obs
 
     def render (self):
+        raw = self.lut.apply (self.raw) 
+        ref = self.ref_lut.apply (self.ref) 
+        img = np.concatenate ([raw, ref], 1)
+        img = img.astype (np.uint8)
         return self.lut.apply (self.raw)
 
 def test():
