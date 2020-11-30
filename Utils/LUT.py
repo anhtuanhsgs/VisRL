@@ -44,8 +44,8 @@ class LUT ():
         step = self.step
         self.table [(i + 1) * step][2] += amount
         l = self.clip (i * step); r = self.clip ((i + 1) * step)
-        linear_adjust_r (i * step, (i + 1) * step)
-        linear_adjust_r ((i + 1) * step, (i + 2) * step)
+        self.linear_adjust_r (i * step, (i + 1) * step)
+        self.linear_adjust_r ((i + 1) * step, (i + 2) * step)
 
     def cmp (self, other, i):
         return (abs (self.table[(i + 1) * self.step][2] - other.table[(i + 1) * self.step][2]))
