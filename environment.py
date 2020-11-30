@@ -23,6 +23,7 @@ class General_env ():
         self.T = config ['T']
         self.size = config ['size']
         self.obs_shape = config ['obs_shape']
+        self.DEBUG = config ['DEBUG']
 
         self.rng = np.random.RandomState (time_seed ())
         pass
@@ -71,6 +72,8 @@ class Debug_env (General_env):
 
     def reset (self, angle=None):
         idx = self.rng.randint (len (self.raw_list))
+        if (self.DEBUG):
+            idx = 16
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
@@ -141,7 +144,6 @@ def test():
     obs = env.reset ()
 
     fig, ax = plt.subplots (1, 3)
-
 
     ax [0].imshow (env.raw)
     ax [1].imshow (env.ref)
