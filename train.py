@@ -138,7 +138,7 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
     
         if rank == 0:
             train_step += 1
-            if train_step % args.log_period == 0 and train_step > 0:
+            if train_step % args.log_period * 10 == 0 and train_step > 0:
                 log_info = {
                     'train: value_loss': value_loss, 
                     'train: policy_loss': policy_loss, 
