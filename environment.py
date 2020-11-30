@@ -125,6 +125,8 @@ def test():
 
     fig, ax = plt.subplots (1, 3)
 
+    print (env.raw.shape, env.ref.shape, env.observation ().shape)
+
     ax [0].imshow (env.raw)
     ax [1].imshow (env.ref)
     ax [2].imshow (env.observation ())
