@@ -155,7 +155,7 @@ parser.add_argument (
 parser.add_argument (
     '--data',
     default='cremi',
-    choices=["cremi"]
+    choices=["cremi", "Random"]
 )
 
 parser.add_argument (
