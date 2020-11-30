@@ -72,7 +72,7 @@ class Debug_env (General_env):
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        self.ref_lut.rand_mod (n=2)
+        self.ref_lut.rand_mod ()
 
         self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
