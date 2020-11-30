@@ -23,7 +23,6 @@ class LUT ():
         for i in range (n):
             l = i * step
             r = (i + 1) * step
-            print ("left:, ", l, "right: ", r)
             mod = self.rng.choice  ([-1, 1], 1) [0] * 60
             self.table [r][2] += mod
             self.table [r][2] = self.clip (self.table [r][2])
@@ -36,8 +35,7 @@ class LUT ():
         unit = (self.table [r][2] - self.table[l][2]) // (r - l)
         for i in range (l, r):
             if (i == 86):
-                print (self.table [i-1][2], self.table [i][2], self.table [i+1][2])
-            self.table [i][2] += (i - l) * unit
+            self.table [i][2] = self.table [l][2] +  (i - l) * unit
 
     def clip (self, x, l=0, r=255):
         return max (min (255, x), 0)
