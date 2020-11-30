@@ -67,13 +67,13 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
                 if train_step % args.train_log_period == 0 and train_step > 0:
                     print ("train: step", train_step, "\teps_reward", eps_reward)
                 if train_step > 0:
-                    pinned_eps_reward = player.env.sum_reward.mean ()
+                    pinned_eps_reward = player.env.sum_rewards.mean ()
                     eps_reward = 0
 
         for step in range(args.num_steps):        
             player.action_train () 
             if rank == 0:
-                eps_reward = player.env.sum_reward.mean ()
+                eps_reward = player.env.sum_rewards.mean ()
             if player.done:
                 break
 

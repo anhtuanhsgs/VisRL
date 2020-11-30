@@ -136,7 +136,7 @@ def test_func (args, shared_model, env_conf, datasets):
                 print ("Log test #:", num_tests)
                 print ("rewards: ", player.reward.mean ())
                 print ("sum rewards: ", reward_sum)
-                log_rewards = [int (rew * 100) for rew in player.env.sum_reward]
+                log_rewards = [int (rew * 100) for rew in player.env.sum_rewards]
                 print ("rewards:", log_rewards)
                 print ("action: ", player.env.action)
                 print ("------------------------------------------------")
