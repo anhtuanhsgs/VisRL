@@ -90,9 +90,9 @@ class Debug_env (General_env):
         for i in range (len (action)):
             old_diff = self.lut.cmp (self.ref_lut, i)
             if (action [i] == 0):
-                self.lut.update (i, -10)
+                self.lut.update (i, -10 * 3)
             if (action [i] == 1):
-                self.lut.update (i, +10)
+                self.lut.update (i, +10 * 3)
             new_diff = self.lut.cmp (self.ref_lut, i)
             rewards [i] += old_diff - new_diff
 

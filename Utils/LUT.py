@@ -26,7 +26,7 @@ class LUT ():
         for i in range (n):
             l = i * step
             r = (i + 1) * step
-            self.table [r][2] += self.rng.randint (-1, 1) * 30
+            self.table [r][2] += self.rng.randint (-1, 1) * 90
             self.table [r][2] = self.clip (self.table [r][2])
             self.linear_adjust_r (l, r)
 
