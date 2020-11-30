@@ -113,6 +113,8 @@ def test():
     X_train = read_im (pths)
     X_train = [X_train [0]]
 
+    print (len (X_train), X_train [0].shape)
+
     config = {
         "T": 10,
         "size": X_train [0].shape,
