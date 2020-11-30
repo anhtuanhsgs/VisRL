@@ -8,7 +8,7 @@ class LUT ():
         self.table = np.zeros ((256, 3), dtype=np.int32)
         for i in range (256):
             self.table [i] = np.array ([i, i, i])
-        self.n = 2
+        self.n = n
         self.step = 256 // (self.n + 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
 
