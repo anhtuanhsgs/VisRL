@@ -56,8 +56,6 @@ class ActorCritic (nn.Module):
         x = torch.cat ([raw_brach, ref_brach], 1)
         x = self.latent (x)
 
-        print (x.shape)
-
         critic = self.critic (x)
         actor = self.actor (x)
 
