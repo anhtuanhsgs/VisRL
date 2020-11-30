@@ -125,11 +125,10 @@ def test():
 
     fig, ax = plt.subplots (1, 3)
 
-    ax [0].show (env.raw)
-    ax [1].show (env.ref)
-    ax [2].show (env.observation ())
+    ax [0].imshow (env.raw)
+    ax [1].imshow (env.ref)
+    ax [2].imshow (env.observation ())
 
-    plt.imshow (obs)
     plt.show ()
 
     for i in range (10):
