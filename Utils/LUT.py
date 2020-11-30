@@ -28,7 +28,7 @@ class LUT ():
             l = i * step
             r = (i + 1) * step
             print ("left:, ", l, "right: ", r)
-            mod = self.rng.randint (-1, 1) * 60
+            mod = self.rng.choice  ([-1, 1], 1) [0] * 60
             self.table [r][2] += mod
             self.table [r][2] = self.clip (self.table [r][2])
             self.mod [i] = mod
