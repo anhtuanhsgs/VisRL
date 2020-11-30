@@ -33,7 +33,6 @@ class LUT ():
 
     def linear_adjust_r (self, l, r):
         unit = 1.0 * (self.table [r][2] - self.table[l][2]) / (r - l)
-        print ("Unit", unit, "l", l, "r", r)
         for i in range (l, r):
             self.table [i][2] = int (self.table [l][2] +  (i - l) * unit)
 

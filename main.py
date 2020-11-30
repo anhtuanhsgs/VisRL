@@ -280,17 +280,17 @@ def main (scripts, args):
     
     time.sleep(0.1)
 
-    for rank in range(0, args.workers):
-        p = mp.Process(
-            target=train_func, args=(rank, args, shared_model, optimizer, env_conf, train_datasets))
+    # for rank in range(0, args.workers):
+    #     p = mp.Process(
+    #         target=train_func, args=(rank, args, shared_model, optimizer, env_conf, train_datasets))
 
-        p.start()
-        processes.append(p)
-        time.sleep(0.1)
+    #     p.start()
+    #     processes.append(p)
+    #     time.sleep(0.1)
 
-    for p in processes:
-        time.sleep(0.1)
-        p.join()
+    # for p in processes:
+    #     time.sleep(0.1)
+    #     p.join()
 
 if __name__ == '__main__':
     scripts = " ".join (sys.argv[0:])
