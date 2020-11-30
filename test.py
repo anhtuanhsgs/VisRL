@@ -36,8 +36,6 @@ def deploy (args, shared_model, player, gpu_id):
                 player.state = player.state.cuda ()
 
         player.action_test ()    
-        tot_num_calculation += np.sum (player.env.action)
-        # print ("number of patches processed: ", np.sum (player.env.action))
         result = np.zeros ((2560, 2560), dtype=np.int32)
         for pred_layer in player.env.pred_list:
             labeled = label (pred_layer > 128) + np.max (result) * (pred_layer > 128)
@@ -138,7 +136,7 @@ def test_func (args, shared_model, env_conf, datasets):
                 print ("sum rewards: ", reward_sum)
                 log_rewards = [int (rew * 100) for rew in player.env.sum_rewards]
                 print ("rewards:", log_rewards)
-                print ("action: ", player.env.action)
+                print ("action: ", player.env.actions)
                 print ("------------------------------------------------")
 
                 log_img = np.concatenate (renderlist, 0)

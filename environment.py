@@ -84,6 +84,7 @@ class Debug_env (General_env):
         self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
         self.step_cnt = 0
+        self.actions = []
 
         self.reset_end ()
         return self.observation ()
@@ -105,6 +106,7 @@ class Debug_env (General_env):
             new_diff = self.lut.cmp (self.ref_lut, i)
             rewards [i] += old_diff - new_diff
 
+        self.actions.append (self.action)
         rewards /= 20
 
         self.sum_rewards += rewards
