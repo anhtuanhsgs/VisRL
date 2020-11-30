@@ -51,7 +51,6 @@ class General_env ():
     def render (self):
         pass
 
-
 class Debug_env (General_env):
     def __init__ (self, datasets, config, seed=0):
         self.init (config)
@@ -63,8 +62,8 @@ class Debug_env (General_env):
         self.ref = None
 
         self.num_actions = config ["num_actions"]
-        self.lut = LUT (rng=self.rng)
-        self.ref_lut = LUT (rng=self.rng)
+        self.lut = LUT (rng=self.rng, n=self.num_actions)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions)
 
         self.step_cnt = 0
 
@@ -77,8 +76,8 @@ class Debug_env (General_env):
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        self.lut = LUT (rng=self.rng)
-        self.ref_lut = LUT (rng=self.rng)
+        self.lut = LUT (rng=self.rng, n=self.num_actions)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions)
 
         self.ref_lut.rand_mod ()
 
