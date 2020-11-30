@@ -42,6 +42,7 @@ class LUT ():
     def modify (self, i, amount):
         step = self.step
         self.table [(i + 1) * step][2] += amount
+        self.table [(i + 1) * step][2] = self.clip (self.table[(i + 1) * step][2])
         l = self.clip (i * step); r = self.clip ((i + 1) * step)
         self.linear_adjust_r (i * step, (i + 1) * step)
         self.linear_adjust_r ((i + 1) * step, (i + 2) * step)
