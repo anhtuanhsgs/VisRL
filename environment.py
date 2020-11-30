@@ -108,6 +108,7 @@ class Debug_env (General_env):
 
         self.actions.append (self.action)
         rewards /= 20
+        self.rewards.append (rewards)
 
         self.sum_rewards += rewards
         info = {}

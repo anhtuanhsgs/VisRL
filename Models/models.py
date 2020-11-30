@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
-import time
+import time, copy
 
 from .ENet import ENet
 
@@ -20,10 +20,13 @@ class outconv(nn.Module):
         return x
 
 class ActorCritic (nn.Module):
-    def __init__ (self, args, backbone, num_actions):
+    def __init__ (self, args, backbone1, backbone2, num_actions):
         super (ActorCritic, self).__init__ ()
         self.name = backbone.name
-        self.backbone = backbone
+        
+        self.backbone1 = backbone1
+        self.backbone2 = backbone2
+
         self.num_actions = num_actions
 
         if args.lstm_feats:
@@ -33,25 +36,27 @@ class ActorCritic (nn.Module):
         else:
             self.use_lstm = False
 
-        latent_dim = backbone.out_dim
+        latent_dim = backbone1.out_dim * 2
+        self.latent = nn.Linear (latent_dim, 64)
 
-        self.actor = nn.Linear (latent_dim, num_actions * 2)
-        self.critic = nn.Linear (latent_dim, num_actions)
+        self.actor = nn.Linear (64, num_actions * 2)
+        self.critic = nn.Linear (64, num_actions)
 
 
     def forward (self, x):
         if (self.use_lstm):
             x, (hx, cx) = x
-        x = self.backbone (x)
-
+        raw_brach = self.backbone1 (x [:, :3, :, :])
+        ref_brach = self.backbone2 (x [:, 3:, :, :])
 
         if self.use_lstm:
             hx, cx = self.lstm (x, (hx, cx))
             x = hx
 
+        x = torch.cat ([raw_brach, ref_brach], 1)
+
         critic = self.critic (x)
         actor = self.actor (x)
-
 
         critic = critic.view (critic.size (0), 1, self.num_actions)
         actor = actor.view (actor.size (0), 2, self.num_actions)
@@ -65,7 +70,11 @@ class ActorCritic (nn.Module):
 
 def get_model (args, name, input_shape, num_actions):
     if name == "ENet":
-        model =  ActorCritic (args, ENet (in_dims=input_shape, feats=args.feats), num_actions)
+        inp_shape_split = copy.deepcopy (input_shape)
+        inp_shape_split [0] //= 2
+        backbone1 = ENet (in_dims=input_shape, feats=args.feats)
+        backbone2 = ENet (in_dims=input_shape, feats=args.feats)
+        model =  ActorCritic (args, backbone1, backbone2, num_actions)
 
     return model
 

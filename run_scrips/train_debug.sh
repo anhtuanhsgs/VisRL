@@ -8,4 +8,4 @@ python main.py --env DEBUG \
 --feats 64 64 128 128 1024 \
 --save-period 100 --log-period 5 --train-log-period 100 \
 --log-dir logs/Dec2020/ --save-model-dir logs/trained_models/Dec2020/ \
---DEBUG \
+\

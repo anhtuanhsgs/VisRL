@@ -137,6 +137,7 @@ def test_func (args, shared_model, env_conf, datasets):
                 log_rewards = [int (rew * 100) for rew in player.env.sum_rewards]
                 print ("rewards:", log_rewards)
                 print ("action: ", player.env.actions)
+                print ("reward history: ", player.env.rewards)
                 print ("------------------------------------------------")
 
                 log_img = np.concatenate (renderlist, 0)
