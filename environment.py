@@ -88,7 +88,7 @@ class Debug_env (General_env):
     def step (self, action):
         self.action = action
         done = False
-        if (self.step_cnt >= self.T):
+        if (self.step_cnt == self.T - 1):
             done = True
 
         rewards = np.zeros ([len (action)], dtype=np.float32)
