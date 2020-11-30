@@ -2,7 +2,7 @@ from __future__ import division
 from setproctitle import setproctitle as ptitle
 import torch
 from environment import *
-from models.models import *
+from Models.models import *
 from player_util import Agent
 from torch.autograd import Variable
 import time, os

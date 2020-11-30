@@ -4,7 +4,7 @@ import torch
 import torch.optim as optim
 from environment import *
 from Utils.utils import ensure_shared_grads, EspTracker
-from models.models import *
+from Models.models import *
 from player_util import Agent
 from torch.autograd import Variable
 from Utils.Logger import Logger
