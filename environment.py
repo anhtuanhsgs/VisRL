@@ -142,4 +142,3 @@ def test():
 
     print (len (X_train))
 
-test ()
