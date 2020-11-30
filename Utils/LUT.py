@@ -35,6 +35,8 @@ class LUT ():
     def linear_adjust_r (self, l, r):
         unit = (self.table [r][2] - self.table[l][2]) // (r - l)
         for i in range (l, r):
+            if (i == 86):
+                print (self.table [i-1][2], self.table [i][2], self.table [i+1][2])
             self.table [i][2] += (i - l) * unit
 
     def clip (self, x, l=0, r=255):
