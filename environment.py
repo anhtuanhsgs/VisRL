@@ -113,7 +113,7 @@ class Debug_env (General_env):
         raw = np.transpose (self.lut.apply (self.raw), [2, 0, 1])
         ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
         obs = np.concatenate ([raw, ref], 0)
-        return obs
+        return obs / 255.0
 
     def render (self):
         raw = self.lut.apply (self.raw) 
@@ -121,6 +121,7 @@ class Debug_env (General_env):
         img = np.concatenate ([raw, ref], 1)
         img = img.astype (np.uint8)
         return img
+        
 def test():
     path = "Data/Random/train/A/*.png"
     pths = natsorted (glob (path))
