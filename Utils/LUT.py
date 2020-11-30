@@ -1,7 +1,7 @@
 import numpy as np
 
 class LUT ():
-    def __init__ (self, n = 2, rng=None):
+    def __init__ (self, n=2, rng=None):
         if rng is None:
             rng = np.random
         self.rng = rng
@@ -26,6 +26,7 @@ class LUT ():
         for i in range (n):
             l = i * step
             r = (i + 1) * step
+            print ("left:, ", l, "right: ", r)
             self.table [r][2] += self.rng.randint (-1, 1) * 60
             self.table [r][2] = self.clip (self.table [r][2])
             self.linear_adjust_r (l, r)
