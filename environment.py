@@ -123,37 +123,37 @@ class Debug_env (General_env):
         img = img.astype (np.uint8)
         return img
 
-# def test():
-#     path = "Data/Random/train/A/*.png"
-#     pths = natsorted (glob (path))
-#     X_train = read_im (pths)
-#     X_train = [X_train [0]]
+def test():
+    path = "Data/Random/train/A/*.png"
+    pths = natsorted (glob (path))
+    X_train = read_im (pths)
+    X_train = [X_train [0]]
 
 
-#     config = {
-#         "T": 3,
-#         "size": X_train [0].shape,
-#         "obs_shape": [1, 32, 32],
-#         "num_actions": 2,
-#     }
+    config = {
+        "T": 3,
+        "size": X_train [0].shape,
+        "obs_shape": [1, 32, 32],
+        "num_actions": 2,
+    }
 
-#     env = Debug_env (X_train, config)
-#     obs = env.reset ()
+    env = Debug_env (X_train, config)
+    obs = env.reset ()
 
-#     fig, ax = plt.subplots (1, 3)
+    fig, ax = plt.subplots (1, 3)
 
 
-#     ax [0].imshow (env.raw)
-#     ax [1].imshow (env.ref)
-#     ax [2].imshow (env.observation ())
+    ax [0].imshow (env.raw)
+    ax [1].imshow (env.ref)
+    ax [2].imshow (env.observation ())
 
-#     plt.show ()
+    plt.show ()
 
-#     for i in range (10):
-#         inp = input ()
-#         actions = [int (inp [0]), int (inp [1])]
-#         obs, reward, done, info = env.step (actions)
-#         plt.imshow (obs)
-#         plt.show ()
+    for i in range (10):
+        inp = input ()
+        actions = [int (inp [0]), int (inp [1])]
+        obs, reward, done, info = env.step (actions)
+        plt.imshow (obs)
+        plt.show ()
 
 
