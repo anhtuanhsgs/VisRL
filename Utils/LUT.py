@@ -30,7 +30,7 @@ class LUT ():
                 self.mod [i] = mod
                 self.linear_adjust_r (l, r)
             l = n * step; r = 255
-            self.linear_adjust_r (l, r)
+            self.linear_adjust_r (l, r, c)
 
     def linear_adjust_r (self, l, r, c):
         unit = 1.0 * (self.table [r][c] - self.table[l][c]) / (r - l)
@@ -45,8 +45,8 @@ class LUT ():
         self.table [(i + 1) * step][c] += amount
         self.table [(i + 1) * step][c] = self.clip (self.table[(i + 1) * step][c])
         l = self.clip (i * step); r = self.clip ((i + 1) * step)
-        self.linear_adjust_r (i * step, (i + 1) * step)
-        self.linear_adjust_r ((i + 1) * step, (i + 2) * step)
+        self.linear_adjust_r (i * step, (i + 1) * step, c)
+        self.linear_adjust_r ((i + 1) * step, (i + 2) * step, c)
 
     def cmp (self, other, i, c):
         return (abs (self.table[(i + 1) * self.step][c] - other.table[(i + 1) * self.step][c]))
