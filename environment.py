@@ -83,7 +83,7 @@ class Debug_env (General_env):
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
 
-        self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
+        self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
@@ -100,12 +100,13 @@ class Debug_env (General_env):
         rewards = np.zeros ([len (action)], dtype=np.float32)
 
         for i in range (len (action)):
-            old_diff = self.lut.cmp (self.ref_lut, i)
+            idx, c = i//3, i%3
+            old_diff = self.lut.cmp (self.ref_lut, idx, c)
             if (action [i] == 0):
-                self.lut.modify (i, -20)
+                self.lut.modify (idx, c, -20)
             if (action [i] == 1):
-                self.lut.modify (i, +20)
-            new_diff = self.lut.cmp (self.ref_lut, i)
+                self.lut.modify (idx, c, +20)
+            new_diff = self.lut.cmp (self.ref_lut, idx, c)
             rewards [i] += old_diff - new_diff
 
         self.actions.append (self.action)

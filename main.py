@@ -211,6 +211,7 @@ def setup_env_conf (args):
 
     env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
 
+    args.log_dir += "/" + args.env + "/" 
     args.env += "_" + args.model
 
     return env_conf
@@ -247,7 +248,7 @@ def main (scripts, args):
 
     env_conf = setup_env_conf (args)
     shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions)
+                                    num_actions=args.num_actions* 3)
 
     if args.load:   
         saved_state = torch.load(
