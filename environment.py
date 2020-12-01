@@ -80,8 +80,8 @@ class Debug_env (General_env):
             #     ], p=1.0),
             A.ShiftScaleRotate (p=1.0, shift_limit=0.2, rotate_limit=10, interpolation=cv2.INTER_NEAREST, scale_limit=(-0.2, 0.2), border_mode=cv2.BORDER_CONSTANT),
             ])
-
-        ret = aug (image=image, mask=mask)        
+        print (image.shape)
+        ret = aug (image=image, mask=np.zeros (image.shape))        
 
         return ret ['image'], ret ['mask']
 
