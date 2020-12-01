@@ -1,7 +1,10 @@
+
+
+
 import numpy as np
 
 class LUT ():
-    def __init__ (self, n=2, rng=None):
+    def __init__ (self, n=2, color_step=20, rng=None):
         if rng is None:
             rng = np.random
         self.rng = rng
@@ -11,6 +14,7 @@ class LUT ():
         self.n = n
         self.step = 256 // (self.n + 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
+        self.color_step=color_step
 
     def apply (self, img):
         ret = self.table [img]
@@ -24,7 +28,8 @@ class LUT ():
             for i in range (n):
                 l = i * step
                 r = (i + 1) * step
-                mod = self.rng.choice  ([-1, 1], 1) [0] * 60
+                # mod = self.rng.choice  (list (range (-3, 4)), 1) [0] * self.color_step
+                mod = self.rng.choice  ([-1 * 4, 1 * 4], 1) [0] * self.color_step
                 self.table [r][c] += mod
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod

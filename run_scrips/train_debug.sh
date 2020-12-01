@@ -1,9 +1,9 @@
 cat $0
-python main.py --env n2RGB_ \
---gpu-id 0 1 2 3 --workers 8 --valid-gpu 0 \
+python main.py --env n2RGB_FixedMod \
+--gpu-id 0 --workers 6 --valid-gpu 0 \
 --data Random \
---lr 1e-4 --num-actions 2 \
---num-steps 3 --max-episode-length 3 \
+--lr 1e-4 --num-actions 8 \
+--num-steps 4 --max-episode-length 4 \
 --size 32 32 \
 --feats 64 64 128 128 512 \
 --save-period 100 --log-period 5 --train-log-period 100 \

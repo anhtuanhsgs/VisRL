@@ -62,8 +62,9 @@ class Debug_env (General_env):
         self.ref = None
 
         self.num_actions = config ["num_actions"]
-        self.lut = LUT (rng=self.rng, n=self.num_actions)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions)
+        self.color_step = 20
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
 
         self.step_cnt = 0
 
@@ -76,8 +77,8 @@ class Debug_env (General_env):
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        self.lut = LUT (rng=self.rng, n=self.num_actions)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions)
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
 
         self.ref_lut.rand_mod ()
 
@@ -98,19 +99,28 @@ class Debug_env (General_env):
             done = True
 
         rewards = np.zeros ([len (action)], dtype=np.float32)
+        color_step = self.color_step
 
         for i in range (len (action)):
             idx, c = i//3, i%3
             old_diff = self.lut.cmp (self.ref_lut, idx, c)
+            
             if (action [i] == 0):
-                self.lut.modify (idx, c, -20)
+                self.lut.modify (idx, c, -color_step)
+            if (action [i] == 2):
+                self.lut.modify (idx, c, +color_step)
             if (action [i] == 1):
-                self.lut.modify (idx, c, +20)
+                pass
+                # if self.lut.cmp (self.ref_lut, idx, c) > self.color_step:
+                #     rewards [i] -= color_step / 2
+                # elif self.lut.cmp (self.ref_lut, idx, c) == 0:
+                #     rewards [i] += color_step / 2
+
             new_diff = self.lut.cmp (self.ref_lut, idx, c)
             rewards [i] += old_diff - new_diff
 
         self.actions.append (self.action)
-        rewards /= 20
+        rewards /= color_step
         self.rewards.append (rewards)
 
         self.sum_rewards += rewards
