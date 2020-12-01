@@ -28,7 +28,7 @@ class LUT ():
                 self.table [r][c] += mod
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
-                self.linear_adjust_r (l, r)
+                self.linear_adjust_r (l, r, c)
             l = n * step; r = 255
             self.linear_adjust_r (l, r, c)
 
