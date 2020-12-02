@@ -98,7 +98,7 @@ class Debug_env (General_env):
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
 
-        self.ref = self.aug (self.ref, self.ref) [0]
+        # self.ref = self.aug (self.ref, self.ref) [0]
 
         self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         self.rewards = []
