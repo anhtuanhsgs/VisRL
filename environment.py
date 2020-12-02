@@ -80,10 +80,6 @@ class Debug_env (General_env):
             ])
         ret = aug (image=image, mask=np.zeros (image.shape), dtype=np.int32)        
 
-        print (ret ['image'].shape, np.max (ret['image']), ret['image'].dtype, np.min (ret ['image']))
-
-        print (image.shape)
-
         return ret ['image'], ret ['mask']
 
 
@@ -101,7 +97,7 @@ class Debug_env (General_env):
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
 
-        self.ref = self.aug (self.ref, self.ref) ['image']
+        # self.ref = self.aug (self.ref, self.ref) [0]
 
         self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         self.rewards = []
