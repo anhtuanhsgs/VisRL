@@ -1,5 +1,5 @@
 cat $0
-python main.py --env n2RGB_LimitedMod \
+python main.py --env n2RGB_LimitedModAug \
 --gpu-id 0 1 2 3 --workers 8 --valid-gpu 0 \
 --data Random \
 --lr 1e-4 --num-actions 8 \
