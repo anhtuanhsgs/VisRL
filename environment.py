@@ -80,7 +80,7 @@ class Debug_env (General_env):
             ])
         ret = aug (image=image, mask=np.zeros (image.shape), dtype=np.int32)        
 
-        print (ret ['image'].shape, np.max (ret['image']))
+        print (ret ['image'].shape, np.max (ret['image']), ret['image'].dtype, np.min (ret ['image']))
 
         print (image.shape)
 
