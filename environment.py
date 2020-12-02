@@ -66,8 +66,6 @@ class Debug_env (General_env):
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
 
-        self.ref = self.aug (self.ref, self.ref) ['image']
-
         self.step_cnt = 0
 
         self.seed (seed)
@@ -99,6 +97,8 @@ class Debug_env (General_env):
         self.ref_lut.rand_mod ()
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
+
+        self.ref = self.aug (self.ref, self.ref)
 
         self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         self.rewards = []
