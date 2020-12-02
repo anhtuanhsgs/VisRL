@@ -78,8 +78,11 @@ class Debug_env (General_env):
             #     ], p=1.0),
                 A.ShiftScaleRotate (p=1.0, shift_limit=0.2, rotate_limit=10, interpolation=cv2.INTER_NEAREST, scale_limit=(-0.2, 0.2), border_mode=cv2.BORDER_CONSTANT),
             ])
+        ret = aug (image=image, mask=np.zeros (image.shape), dtype=np.int32)        
+
+        print (ret ['image'].shape, np.max (ret['image']))
+
         print (image.shape)
-        ret = aug (image=image, mask=np.zeros (image.shape))        
 
         return ret ['image'], ret ['mask']
 
@@ -98,7 +101,7 @@ class Debug_env (General_env):
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
 
-        self.ref = self.aug (self.ref, self.ref)
+        self.ref = self.aug (self.ref, self.ref) ['image']
 
         self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         self.rewards = []
