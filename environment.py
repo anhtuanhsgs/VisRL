@@ -134,9 +134,9 @@ class Debug_env (General_env):
 
             new_diff = self.lut.cmp (self.ref_lut, idx, c)
             if (old_diff - new_diff) > 0:
-                rewards += color_step
+                rewards [i] += color_step
             elif (old_diff - new_diff) < 0:
-                rewards -= color_step
+                rewards [i] -= color_step
             # rewards [i] = 1.0 * (old_diff - new_diff)
 
         self.actions.append (self.action)
