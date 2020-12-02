@@ -72,11 +72,12 @@ class Debug_env (General_env):
 
     def aug (self, image, mask):
         aug = A.Compose([
-            # A.OneOf([
-            #     A.ElasticTransform(p=0.5, alpha=1, sigma=5, alpha_affine=5, interpolation=cv2.INTER_NEAREST),
-            #     A.GridDistortion(p=0.5, interpolation=cv2.INTER_NEAREST, border_mode=cv2.BORDER_CONSTANT),
-            #     ], p=1.0),
-                A.ShiftScaleRotate (p=1.0, shift_limit=0.2, rotate_limit=10, interpolation=cv2.INTER_NEAREST, scale_limit=(-0.2, 0.2), border_mode=cv2.BORDER_CONSTANT),
+            A.OneOf([
+                    A.ElasticTransform(p=0.5, alpha=1, sigma=5, alpha_affine=5, interpolation=cv2.INTER_NEAREST),
+                    A.GridDistortion(p=0.5, interpolation=cv2.INTER_NEAREST, border_mode=cv2.BORDER_CONSTANT),
+                ], p=1.0),
+                A.ShiftScaleRotate (p=1.0, shift_limit=0.4, rotate_limit=180, interpolation=cv2.INTER_NEAREST, 
+                                        scale_limit=(-0.4, 0.4), border_mode=cv2.BORDER_CONSTANT),
             ])
         ret = aug (image=image, mask=np.zeros (image.shape), dtype=np.int32)        
 
