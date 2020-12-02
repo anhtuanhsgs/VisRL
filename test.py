@@ -126,7 +126,7 @@ def test_func (args, shared_model, env_conf, datasets):
                 if gpu_id >= 0:
                     with torch.cuda.device (gpu_id):
                         state_to_save = player.model.state_dict ()
-                        torch.save (state_to_save, '{0}{1}.dat'.format (args.save_model_dir, args.env + '_' + str (num_tests)))
+                        torch.save (state_to_save, '{0}{1}.dat'.format (args.save_model_dir, str (num_tests)))
 
             if num_tests % args.log_period == 0:
                 print ("----------------------VALID SET--------------------------")

@@ -212,6 +212,7 @@ def setup_env_conf (args):
     env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
 
     args.log_dir += "/" + args.env + "/" 
+    args.save_model_dir += '/' + args.env + '/'
     args.env += "_" + args.model
 
     return env_conf
