@@ -12,7 +12,7 @@ class LUT ():
         for i in range (256):
             self.table [i] = np.array ([i, i, i])
         self.n = n
-        self.step = 256 // (self.n + 1)
+        self.step = 256 // (self.n - 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
 
@@ -26,12 +26,12 @@ class LUT ():
         step = self.step
         for c in range (3):
             for i in range (n):
-                l = i * step
-                r = (i + 1) * step
+                l = (i - 1) * step
+                r = i * step
                 mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
                 # mod = self.rng.choice  ([-1 * 4, 1 * 4], 1) [0] * self.color_step
                 # self.table [r][c] += mod
-                self.table [r][c] = self.rng.choice  (list (range (0, 255)), 1) [0]  
+                self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
                 self.linear_adjust_r (l, r, c)
@@ -39,6 +39,8 @@ class LUT ():
             self.linear_adjust_r (l, r, c)
 
     def linear_adjust_r (self, l, r, c):
+        if l < 0 or r > 255:
+            return
         unit = 1.0 * (self.table [r][c] - self.table[l][c]) / (r - l)
         for i in range (l, r):
             self.table [i][c] = int (self.table [l][c] +  (i - l) * unit)
