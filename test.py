@@ -55,7 +55,7 @@ def test_func (args, shared_model, env_conf, datasets):
     if not args.deploy:
         logger = Logger (args.log_dir)
 
-        saved_src_dir = arsg.log_dir + "/src/"
+        saved_src_dir = args.log_dir + "/src/"
         create_dir (saved_code)
         os.system ("cp *.py " + saved_src_dir)
         os.system ("cp *.sh " + saved_src_dir)
