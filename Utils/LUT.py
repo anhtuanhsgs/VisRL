@@ -58,10 +58,13 @@ class LUT ():
 
     def modify (self, i, c, amount):
         step = self.step
-        self.table [i * step][c] += amount
-        self.table [i * step][c] = self.clip (self.table[i * step][c])
-        self.linear_adjust_r ((i - 1) * step, i * step, c)
-        self.linear_adjust_r (i * step, (i + 1) * step, c)
+        mid = self.clip (i * step)
+        l = self.clip ((i - 1) * step)
+        r = self.clip ((i + 1) * step)
+        self.table [mid][c] += amount
+        self.table [mid][c] = self.clip (self.table[mid][c])
+        self.linear_adjust_r (l, mid, c)
+        self.linear_adjust_r (mid, r, c)
 
     def cmp (self, other, i, c):
-        return (abs (self.table[i * self.step][c] - other.table[i * self.step][c]))
+        return (abs (self.table[self.clip (i * self.step)][c] - other.table[self.clip (i * self.step)][c]))
