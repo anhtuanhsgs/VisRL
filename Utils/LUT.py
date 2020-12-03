@@ -32,6 +32,7 @@ class LUT ():
                     continue
                 r = self.clip (i * step)
                 
+                mod = 0
                 # Limited mod
                 # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
                 
