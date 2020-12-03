@@ -15,7 +15,7 @@ class LUT ():
         self.step = 256 // (self.n - 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
-        self.mod_rate = 0.2
+        self.mod_rate = 0.4
 
     def apply (self, img):
         ret = self.table [img]
