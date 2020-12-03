@@ -26,8 +26,8 @@ class LUT ():
         step = self.step
         for c in range (3):
             for i in range (n):
-                l = (i - 1) * step
-                r = i * step
+                l = self.clip ((i - 1) * step)
+                r = self.clip (i * step)
                 mod = 0
 
                 # Limited mod
@@ -43,11 +43,11 @@ class LUT ():
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
                 self.linear_adjust_r (l, r, c)
-            l = (n - 1) * step; r = 255
+            l = self.clip ((n - 1) * step); r = 255
             self.linear_adjust_r (l, r, c)
 
     def linear_adjust_r (self, l, r, c):
-        if l < 0 or r > 255:
+        if l < 0 or r > 255 or l >= r:
             return
         unit = 1.0 * (self.table [r][c] - self.table[l][c]) / (r - l)
         for i in range (l, r):
