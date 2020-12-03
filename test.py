@@ -55,6 +55,14 @@ def test_func (args, shared_model, env_conf, datasets):
     if not args.deploy:
         logger = Logger (args.log_dir)
 
+        saved_src_dir = arsg.log_dir + "/src/"
+        create_dir (saved_code)
+        os.system ("cp *.py " + saved_src_dir)
+        os.system ("cp *.sh " + saved_src_dir)
+        os.system ("cp -r models " + saved_src_dir)
+        os.system ("cp -r runs_cripts " + saved_src_dir)
+        os.system ("cp -r Utils " + saved_src_dir)
+
     torch.manual_seed (args.seed)
 
     if gpu_id >= 0:

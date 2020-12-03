@@ -28,9 +28,16 @@ class LUT ():
             for i in range (n):
                 l = (i - 1) * step
                 r = i * step
-                mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
+                
+                # Limited mod
+                # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
+                
+                # Fixed mod
                 # mod = self.rng.choice  ([-1 * 4, 1 * 4], 1) [0] * self.color_step
+                
                 # self.table [r][c] += mod
+                
+                # Full mod
                 self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
