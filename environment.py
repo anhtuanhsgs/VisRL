@@ -62,7 +62,7 @@ class Debug_env (General_env):
         self.ref = None
 
         self.num_actions = config ["num_actions"]
-        self.color_step = 32
+        self.color_step = 16
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
 
