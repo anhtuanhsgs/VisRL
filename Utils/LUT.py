@@ -15,6 +15,7 @@ class LUT ():
         self.step = 256 // (self.n - 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
+        self.mod_rate = 0.2
 
     def apply (self, img):
         ret = self.table [img]
@@ -25,11 +26,12 @@ class LUT ():
         n = self.n
         step = self.step
         for c in range (3):
+            l = 0
             for i in range (n):
-                l = self.clip ((i - 1) * step)
+                if self.rng.rand () > self.mod_rate:
+                    continue
                 r = self.clip (i * step)
-                mod = 0
-
+                
                 # Limited mod
                 # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
                 
@@ -43,7 +45,9 @@ class LUT ():
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
                 self.linear_adjust_r (l, r, c)
-            l = self.clip ((n - 1) * step); r = 255
+                l = r
+            # l = self.clip ((n - 1) * step); r = 255
+            r = 255
             self.linear_adjust_r (l, r, c)
 
     def linear_adjust_r (self, l, r, c):

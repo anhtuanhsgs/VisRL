@@ -198,7 +198,13 @@ parser.add_argument (
     type=int,
     default=2,
 )
-
+########################################## VIS ENV ##################################
+parser.add_argument (
+    "--color-step",
+    type=int,
+    default=20,
+)
+########################################## VIS ENV ##################################
 def setup_env_conf (args):
     env_conf = {
         "data": args.data,
@@ -207,6 +213,7 @@ def setup_env_conf (args):
         "DEBUG": args.DEBUG,
         "size": args.size,
         "num_actions": args.num_actions,
+        "color_step": args.color_step,
     }
 
     env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
