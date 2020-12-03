@@ -56,11 +56,10 @@ def test_func (args, shared_model, env_conf, datasets):
         logger = Logger (args.log_dir)
 
         saved_src_dir = args.log_dir + "/src/"
-        create_dir (saved_src_dir)
+        create_dir (saved_src_dir`)
         os.system ("cp *.py " + saved_src_dir)
-        os.system ("cp *.sh " + saved_src_dir)
-        os.system ("cp -r models " + saved_src_dir)
-        os.system ("cp -r runs_cripts " + saved_src_dir)
+        os.system ("cp -r Models " + saved_src_dir)
+        os.system ("cp -r run_scripts " + saved_src_dir)
         os.system ("cp -r Utils " + saved_src_dir)
 
     torch.manual_seed (args.seed)
