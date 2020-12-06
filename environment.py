@@ -199,7 +199,9 @@ class Debug_env (General_env):
         return np.maximum (np.minimum (x, r), l) 
 
     def rasterize (self, rgba_vol):
+        print ("rgba_vol shape", rgba_vol.shape)
         ret = np.zeros (rgba_vol[0].shape [1:3] + (3,), dtype=np.float32)
+        print (ret.shape)
         alpha = np.zeros (rgba_vol [0].shape [1:3] + (1,), dtype=np.float32)
 
         alpha += 0.001
