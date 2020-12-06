@@ -205,8 +205,8 @@ class Debug_env (General_env):
         rgba_vol = self.lut.apply (rgba_vol) 
         
         print (rgba_vol.shape)
-        print (rgba_vol [i,:,:,3:].shape)
-        print (rgba_vol [i,:,:,:3].shape)
+        print (rgba_vol [0,:,:,3:].shape)
+        print (rgba_vol [0,:,:,:3].shape)
         print (ret.shape)
 
         for i in range (len (rgba_vol)):
