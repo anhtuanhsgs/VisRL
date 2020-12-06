@@ -138,8 +138,6 @@ class Debug_env (General_env):
 
     def step (self, action):
 
-        print ("DEBUG", len (action))
-
         self.action = action
         done = False
         if (self.step_cnt == self.T - 1):
@@ -177,8 +175,6 @@ class Debug_env (General_env):
         self.actions.append (self.action)
         rewards /= color_step
         self.rewards.append (rewards)
-
-        print (rewards.shape, self.sum_rewards.shape)
 
         self.sum_rewards += rewards
         info = {}
