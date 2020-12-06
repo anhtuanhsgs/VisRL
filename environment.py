@@ -125,7 +125,7 @@ class Debug_env (General_env):
 
         # self.ref = self.aug (self.ref, self.ref) [0]
 
-        if not args.is3D:
+        if not self.is3D:
             self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         else:
             self.sum_rewards = np.zeros ([self.num_actions * 4], dtype=np.float32)
