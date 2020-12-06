@@ -204,6 +204,11 @@ class Debug_env (General_env):
         alpha += 0.001
         rgba_vol = self.lut.apply (rgba_vol) 
         
+        print (rgba_vol.shape)
+        print (rgba_vol [i,:,:,3:].shape)
+        print (rgba_vol [i,:,:,:3].shape)
+        print (ret.shape)
+
         for i in range (len (rgba_vol)):
             ret = self.clip (ret + rgba_vol [i,:,:,:3].astype (np.float32) 
                         * rgba_vol [i,:,:,3:].astype (np.float32) / 255.0 
