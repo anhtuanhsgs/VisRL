@@ -45,7 +45,7 @@ class LUT ():
                 # mod = self.rng.choice  (list (range (-3, 4)), 1) [0] * self.color_step
                 # self.table [r][c] += mod
 
-                Fixed mod
+                # Fixed mod
                 mod = self.rng.choice  ([-1 * 4, 0, 1 * 4], 1) [0] * self.color_step
                 self.table [r][c] += mod                
                 
