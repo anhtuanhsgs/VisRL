@@ -142,7 +142,7 @@ class Debug_env (General_env):
         done = False
         if (self.step_cnt == self.T - 1):
             done = True
-`
+
         rewards = np.zeros ([len (action)], dtype=np.float32)
         color_step = self.color_step
 
