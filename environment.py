@@ -175,6 +175,8 @@ class Debug_env (General_env):
         rewards /= color_step
         self.rewards.append (rewards)
 
+        print (rewards.shape, self.sum_rewards.shape)
+
         self.sum_rewards += rewards
         info = {}
         ret = (self.observation (), rewards, done, info)
