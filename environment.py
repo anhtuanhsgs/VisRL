@@ -187,6 +187,7 @@ class Debug_env (General_env):
             ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
             obs = np.concatenate ([raw, ref], 0)
         else:
+            print (self.raw.shape, self.lut.apply (self.raw).shape)
             raw = self.rasterize (self.lut.apply (self.raw))
             raw = np.transpose (raw, [2, 0, 1])
             ref = self.rasterize (self.ref_lut.apply (self.ref))
