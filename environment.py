@@ -87,18 +87,21 @@ class Debug_env (General_env):
     def aug3D (self, vols):
         num_rot_xy = self.rng.randint (4)
         num_rot_yz = self.rng.randint (4)
-        useFlipXY = self.rng.randint (2)
-        useFlipYZ = self.rng.randint (2)
+        useFlipX = self.rng.randint (2)
+        useFlipY = self.rng.randint (2)
+        useFlipY = self.rng.randint (2)
 
         ret = []
         for vol in vols:
             vol = np.rot90 (vol, num_rot_yz, axes=(0,1))
             vol = np.rot90 (vol, num_rot_xy, axes=(1,2))
 
-            if useFlipXY:
-                vol = np.flip (vol, axes=(0,1))
-            if useFlipYZ: 
-                vol = np.flip (vol, axes=(1,2))
+            if useFlipz:
+                vol = np.flip (vol, axes=0)
+            if useFlipx: 
+                vol = np.flip (vol, axes=1)
+            if useFlipY:
+                vol = np.flip (vol, axes=2)
 
             ret.append (vol)
 
