@@ -129,7 +129,6 @@ class Debug_env (General_env):
             self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         else:
             self.sum_rewards = np.zeros ([self.num_actions * 4], dtype=np.float32)
-            print ("DEBUG", self.sum_rewards.shape, self.num_actions)
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
@@ -138,6 +137,9 @@ class Debug_env (General_env):
         return self.observation ()
 
     def step (self, action):
+
+        print ("DEBUG", len (action))
+
         self.action = action
         done = False
         if (self.step_cnt == self.T - 1):
