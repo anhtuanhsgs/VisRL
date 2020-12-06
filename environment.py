@@ -89,16 +89,16 @@ class Debug_env (General_env):
         num_rot_yz = self.rng.randint (4)
         useFlipX = self.rng.randint (2)
         useFlipY = self.rng.randint (2)
-        useFlipY = self.rng.randint (2)
+        useFlipZ = self.rng.randint (2)
 
         ret = []
         for vol in vols:
             vol = np.rot90 (vol, num_rot_yz, axes=(0,1))
             vol = np.rot90 (vol, num_rot_xy, axes=(1,2))
 
-            if useFlipz:
+            if useFlipZ:
                 vol = np.flip (vol, axes=0)
-            if useFlipx: 
+            if useFlipX: 
                 vol = np.flip (vol, axes=1)
             if useFlipY:
                 vol = np.flip (vol, axes=2)
