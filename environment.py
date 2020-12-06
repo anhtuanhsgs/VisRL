@@ -203,7 +203,6 @@ class Debug_env (General_env):
         alpha = np.zeros (rgba_vol.shape [1:3] + (1,), dtype=np.float32)
 
         alpha += 0.001
-        rgba_vol = self.lut.apply (rgba_vol) 
         
         print ("aaaaaaaaaaaaaaaaaaa")
         print ("ret", ret.shape)
