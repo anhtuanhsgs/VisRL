@@ -40,11 +40,7 @@ class ActorCritic (nn.Module):
         latent_dim = backbone1.out_dim * 2
         self.latent = nn.Linear (latent_dim, 64)
 
-        if not args.is3D:
-            self.actor = nn.Linear (64, num_actions * 3)
-        else:
-            self.actor = nn.Linear (64, num_actions * 4)
-
+        self.actor = nn.Linear (64, num_actions * 3)
         self.critic = nn.Linear (64, num_actions)
 
 
@@ -65,11 +61,7 @@ class ActorCritic (nn.Module):
         actor = self.actor (x)
 
         critic = critic.view (critic.size (0), 1, self.num_actions)
-
-        if not self.is3D:
-            actor = actor.view (actor.size (0), 3, self.num_actions)
-        else:
-            actor = actor.view (actor.size (0), 4, self.num_actions)
+        actor = actor.view (actor.size (0), 3, self.num_actions)
 
         if self.use_lstm:
             ret = (critic, actor, (hx, cx))
