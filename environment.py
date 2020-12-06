@@ -97,11 +97,11 @@ class Debug_env (General_env):
             vol = np.rot90 (vol, num_rot_xy, axes=(1,2))
 
             if useFlipZ:
-                vol = np.flip (vol, axes=0)
+                vol = np.flip (vol, axis=0)
             if useFlipX: 
-                vol = np.flip (vol, axes=1)
+                vol = np.flip (vol, axis=1)
             if useFlipY:
-                vol = np.flip (vol, axes=2)
+                vol = np.flip (vol, axis=2)
 
             ret.append (vol)
 
