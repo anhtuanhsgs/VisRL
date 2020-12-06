@@ -64,8 +64,8 @@ class Debug_env (General_env):
 
         self.num_actions = config ["num_actions"]
         self.color_step = config ["color_step"]
-        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
 
         self.step_cnt = 0
 
@@ -116,8 +116,8 @@ class Debug_env (General_env):
 
         self.ref, self.raw = self.aug3D ([self.ref, self.raw])
 
-        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
 
         self.ref_lut.rand_mod ()
 
