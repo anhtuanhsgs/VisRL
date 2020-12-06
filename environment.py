@@ -187,7 +187,6 @@ class Debug_env (General_env):
             ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
             obs = np.concatenate ([raw, ref], 0)
         else:
-            print (self.raw.shape, self.lut.apply (self.raw).shape)
             raw = self.rasterize (self.lut.apply (self.raw))
             raw = np.transpose (raw, [2, 0, 1])
             ref = self.rasterize (self.ref_lut.apply (self.ref))
@@ -204,12 +203,6 @@ class Debug_env (General_env):
 
         alpha += 0.001
         
-        print ("aaaaaaaaaaaaaaaaaaa")
-        print ("ret", ret.shape)
-        print ("alpha", alpha.shape)
-        print ("rgba_vol", rgba_vol.shape)
-        print (rgba_vol [0,:,:,3:].shape)
-        print (rgba_vol [0,:,:,:3].shape)
 
         for i in range (len (rgba_vol)):
             ret = self.clip (ret + rgba_vol [i,:,:,:3].astype (np.float32) 
