@@ -262,8 +262,13 @@ def main (scripts, args):
         valid_datasets = setup_data (args, "valid")
 
     env_conf = setup_env_conf (args)
-    shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions)
+
+    if not args.is3D:
+        shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
+                                    num_actions=args.num_actions * 3)
+    else:
+         shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
+                                    num_actions=args.num_actions * 4)
 
     if args.load:   
         saved_state = torch.load(
