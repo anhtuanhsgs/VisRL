@@ -4,18 +4,26 @@
 import numpy as np
 
 class LUT ():
-    def __init__ (self, n=2, color_step=20, rng=None):
+    def __init__ (self, n=2, is3D=False, color_step=20, rng=None):
         if rng is None:
             rng = np.random
         self.rng = rng
-        self.table = np.zeros ((256, 3), dtype=np.int32)
-        for i in range (256):
-            self.table [i] = np.array ([i, i, i])
+        self.is3D = is3D
+        if not self.is3D:
+            self.table = np.zeros ((256, 3), dtype=np.int32)
+            for i in range (256):
+                self.table [i] = np.array ([i, i, i])
+        else:
+            self.table = np.zeros ((256, 4), dtype=np.int32)
+            for i in range (256):
+                self.table [i] = np.array ([i, i, i, i])
+        
         self.n = n
         self.step = 256 // (self.n - 1)
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
         self.mod_rate = 0.4
+
 
     def apply (self, img):
         ret = self.table [img]
@@ -25,24 +33,25 @@ class LUT ():
         rng = self.rng
         n = self.n
         step = self.step
-        for c in range (3):
+        for c in range (self.table.shape[-1]):
             l = 0
             for i in range (n):
-                if self.rng.rand () > self.mod_rate:
-                    continue
+                # if self.rng.rand () > self.mod_rate:
+                #     continue
                 r = self.clip (i * step)
                 
                 mod = 0
                 # Limited mod
-                # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
-                
-                # Fixed mod
-                # mod = self.rng.choice  ([-1 * 4, 1 * 4], 1) [0] * self.color_step
-                
+                # mod = self.rng.choice  (list (range (-3, 4)), 1) [0] * self.color_step
                 # self.table [r][c] += mod
+
+                Fixed mod
+                mod = self.rng.choice  ([-1 * 4, 0, 1 * 4], 1) [0] * self.color_step
+                self.table [r][c] += mod                
                 
                 # Full mod
-                self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
+                # self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
+                
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
                 self.linear_adjust_r (l, r, c)

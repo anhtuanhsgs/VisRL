@@ -155,7 +155,7 @@ parser.add_argument (
 parser.add_argument (
     '--data',
     default='cremi',
-    choices=["cremi", "Random"]
+    choices=["cremi", "Random", "3DVols"]
 )
 
 parser.add_argument (
@@ -214,8 +214,10 @@ def setup_env_conf (args):
         "size": args.size,
         "num_actions": args.num_actions,
         "color_step": args.color_step,
+        "3D": "3D" in args.data,
     }
 
+    args.is3D = "3D" in args.data
     env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
 
     args.log_dir += "/" + args.env + "/" 
@@ -238,6 +240,11 @@ def setup_data (args, set_type):
         datasets = [raw]
         args.data_channel = 1
 
+    if args.data == "3DVols":
+        raw = read_imgs_from_path ("Data/3DVols/" + set_type + "/A/")
+        datasets = [raw]
+        args.data_channel = 1
+
     return datasets
 
 def main (scripts, args):
@@ -256,7 +263,7 @@ def main (scripts, args):
 
     env_conf = setup_env_conf (args)
     shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions* 3)
+                                    num_actions=args.num_actions)
 
     if args.load:   
         saved_state = torch.load(

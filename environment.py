@@ -24,6 +24,7 @@ class General_env ():
         self.size = config ['size']
         self.obs_shape = config ['obs_shape']
         self.DEBUG = config ['DEBUG']
+        self.is3D = config ["3D"]
 
         self.rng = np.random.RandomState (time_seed ())
         pass
@@ -83,6 +84,25 @@ class Debug_env (General_env):
 
         return ret ['image'], ret ['mask']
 
+    def aug3D (self, vols):
+        num_rot_xy = self.rng.randint (4)
+        num_rot_yz = self.rng.randint (4)
+        useFlipXY = self.rng.randint (2)
+        useFlipYZ = self.rng.randint (2)
+
+        ret = []
+        for vol in vols:
+            vol = np.rot90 (vol, num_rot_yz, axes=(0,1))
+            vol = np.rot90 (vol, num_rot_xy, axes=(1,2))
+
+            if useFlipXY:
+                vol = np.flip (vol, axes=(0,1))
+            if useFlipYZ: 
+                vol = np.flip (vol, axes=(1,2))
+
+            ret.append (vol)
+
+        return ret
 
     def reset (self, angle=None):
         idx = self.rng.randint (len (self.raw_list))
@@ -90,6 +110,8 @@ class Debug_env (General_env):
             idx = 16
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
+
+        self.ref, self.raw = self.aug3D ([self.ref, self.raw])
 
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step)
@@ -100,7 +122,10 @@ class Debug_env (General_env):
 
         # self.ref = self.aug (self.ref, self.ref) [0]
 
-        self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
+        if not args.is3D:
+            self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
+        else:
+            self.sum_rewards = np.zeros ([self.num_actions * 4], dtype=np.float32)
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
@@ -118,7 +143,11 @@ class Debug_env (General_env):
         color_step = self.color_step
 
         for i in range (len (action)):
-            idx, c = i//3, i%3
+            if not self.is3D:
+                idx, c = i//3, i%3
+            else:
+                idx, c = i//4, i%4
+
             old_diff = self.lut.cmp (self.ref_lut, idx, c)
             
             if (action [i] == 0):
@@ -150,16 +179,51 @@ class Debug_env (General_env):
         return ret
 
     def observation (self):
-        raw = np.transpose (self.lut.apply (self.raw), [2, 0, 1])
-        ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
-        obs = np.concatenate ([raw, ref], 0)
+        if not self.is3D:
+            raw = np.transpose (self.lut.apply (self.raw), [2, 0, 1])
+            ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
+            obs = np.concatenate ([raw, ref], 0)
+        else:
+            raw = self.rasterize (self.lut.apply (self.raw))
+            raw = np.transpose (raw, [2, 0, 1])
+            ref = self.rasterize (self.ref_lut.apply (self.ref))
+            ref = np.transpose (ref, [2, 0, 1])
+            obs = np.concatenate ([raw, ref], 0)
         return obs / 255.0
 
+    def clip (self, x, l=0, r=255):
+        return np.maximum (np.minimum (x, r), l) 
+
+    def rasterize (self, rgba_vol):
+        ret = np.zeros (rgba_vol[0].shape [1:3] + (3,), dtype=np.float32)
+        alpha = np.zeros (rgba_vol [0].shape [1:3] + (1,), dtype=np.float32)
+
+        alpha += 0.001
+        rgba_vol = self.lut.apply (vol) 
+        
+        for i in range (len (vol)):
+            ret = self.clip (ret + rgba_vol [i,:,:,:3].astype (np.float32) 
+                        * rgba_vol [i,:,:,3:].astype (np.float32) / 255.0 
+                        * (1 - alpha))
+            alpha = self.clip (alpha + rgba_vol [i,:,:,3:].astype (np.float32) / 255.0  * (1. - alpha))
+
+        return ret.astype (np.uint8)
+
     def render (self):
-        raw = self.lut.apply (self.raw) 
-        ref = self.ref_lut.apply (self.ref) 
-        img = np.concatenate ([raw, ref], 1)
-        img = img.astype (np.uint8)
+        if not self.is3D:
+            raw = self.lut.apply (self.raw) 
+            ref = self.ref_lut.apply (self.ref) 
+            img = np.concatenate ([raw, ref], 1)
+            img = img.astype (np.uint8)
+        else:
+            raw_rgba = self.lut.apply (self.raw)
+            ref_rgba = self.ref_lut.apply (self.ref)
+            
+            raw_ras = self.rasterize (raw_rgba)
+            ref_ras = self.rasterize (ref_rgba)
+
+            img = np.concatenate ([raw_ras, ref_ras], 1)
+            img = img.astype (np.uint8)
         return img
 
 def test():
