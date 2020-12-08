@@ -56,13 +56,13 @@ class LUT ():
                 r = self.clip (i * step)
                 
                 mod = 0
-                ## Limited mod
-                # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
-                # self.table [r][c] += mod
+                # Limited mod
+                mod = self.rng.choice  (list (range (-3, 4)), 1) [0] * self.color_step
+                self.table [r][c] += mod
 
-                ## Fixed mod
-                mod = self.rng.choice  ([-1 * 4, 0, 1 * 4], 1) [0] * self.color_step
-                self.table [r][c] += mod             
+                # ## Fixed mod
+                # mod = self.rng.choice  ([-1 * 4, 0, 1 * 4], 1) [0] * self.color_step
+                # self.table [r][c] += mod             
                 
                 ## Full mod
                 # mod = self.rng.randint (-256, 256)
