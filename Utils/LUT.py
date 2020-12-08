@@ -14,7 +14,7 @@ class LUT ():
             for i in range (256):
                 self.table [i] = np.array ([i, i, i])
         else:
-            if args.initial is not None:
+            if initial is not None:
                 self.table = np.zeros ((256, 4), dtype=np.int32)
                 for i in range (256):
                     self.table [i] = np.array ([i, i, i, i])
