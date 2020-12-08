@@ -238,7 +238,7 @@ def setup_data (args, set_type):
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
         datasets = [raw]
         args.data_channel = 1
-        args.lut_init = [0, 0, 0, 0, 50, 50, 50]
+        args.lut_init = [0, 0, 0, 0, 10, 50, 50]
 
     if args.data == "Random":
         raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
