@@ -87,7 +87,7 @@ def test ():
             self.feats = [32, 32, 64, 64, 1024]
 
     args = ARG ()
-    shape = [1, 6, 32, 32]
+    shape = [1, 6, 128, 128]
     
 
     model = get_model (args, "ENet", input_shape=shape[1:], num_actions=3)
