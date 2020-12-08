@@ -6,7 +6,7 @@ import skimage.io as io
 from skimage.transform import rotate
 
 import albumentations as A
-import albumentations.functional as F
+from albumentations import functional as F
 import matplotlib.pyplot as plt
 
 from Utils.LUT import LUT
