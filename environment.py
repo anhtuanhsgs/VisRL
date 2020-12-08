@@ -108,15 +108,15 @@ class Debug_env (General_env):
             ret.append (vol)
 
         # Full AUG
-        # angle = self.rng.randint (30)
-        # scale = self.rng.uniform (0.8, 1.2)
-        # dx = self.rng.randint (-4, 4)
-        # dy = self.rng.randint (-4, 4)
+        angle = self.rng.randint (10)
+        scale = self.rng.uniform (0.9, 1.1)
+        dx = self.rng.randint (-4, 4)
+        dy = self.rng.randint (-4, 4)
 
-        # for vol in ret:
-        #     for i, img in enumerate (vol):
-        #         vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
-        #                         interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
+        for vol in ret:
+            for i, img in enumerate (vol):
+                vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
+                                interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
 
         return ret
 
