@@ -1,7 +1,7 @@
 cat $0
 python main.py --env chest_1rgba_LimitedModLimitedAug \
 --gpu-id 0 1 2 3 --workers 12 --valid-gpu 0 \
---data Chest \
+--data 3DChest \
 --lr 1e-4 \
 --num-actions 4 --color-step 16 \
 --num-steps 3 --max-episode-length 3 \
