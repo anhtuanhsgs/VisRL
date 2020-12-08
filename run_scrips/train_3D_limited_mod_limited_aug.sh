@@ -1,5 +1,5 @@
 cat $0
-python main.py --env 3D_1rgba_LimitedModAug \
+python main.py --env 3D_1rgba_LimitedModLimitedAug \
 --gpu-id 0 1 2 3 --workers 12 --valid-gpu 0 \
 --data 3DVols \
 --lr 1e-4 \
