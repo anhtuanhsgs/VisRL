@@ -217,6 +217,7 @@ def setup_env_conf (args):
         "num_actions": args.num_actions,
         "color_step": args.color_step,
         "3D": "3D" in args.data,
+        "ref_lut_init": args.ref_lut_init, 
         "lut_init": args.lut_init, 
     }
 
@@ -238,13 +239,15 @@ def setup_data (args, set_type):
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
         datasets = [raw]
         args.data_channel = 1
-        args.lut_init = [0, 0, 0, 0, 10, 50, 50]
+        args.lut_init = [48, 48, 48, 48, 48, 48, 48]
+        args.ref_lut_init = [0, 0, 0, 0, 16, 48, 48]
 
     if args.data == "Random":
         raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
         datasets = [raw]
         args.data_channel = 1
         args.lut_init = None
+        args.ref_lut_init = None
 
 
     if args.data == "3DVols":
@@ -252,6 +255,7 @@ def setup_data (args, set_type):
         datasets = [raw]
         args.data_channel = 1
         args.lut_init = None
+        args.ref_lut_init = None
 
     return datasets
 
