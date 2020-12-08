@@ -21,6 +21,7 @@ class LUT ():
             else:
                 step = 256 // len (initial)
                 l = 0
+                print ("lut intial:", initial)
                 for i in range (len (initial)):
                     r = step * i
                     r = self.clip (r)
