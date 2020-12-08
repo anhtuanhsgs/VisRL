@@ -133,6 +133,7 @@ class Debug_env (General_env):
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
 
+        self.lut.rand_mod ()
         self.ref_lut.rand_mod ()
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
