@@ -6,6 +6,7 @@ import skimage.io as io
 from skimage.transform import rotate
 
 import albumentations as A
+import albumentations.functional as F
 import matplotlib.pyplot as plt
 
 from Utils.LUT import LUT
@@ -104,6 +105,17 @@ class Debug_env (General_env):
                 vol = np.flip (vol, axis=2)
 
             ret.append (vol)
+
+        # Random rotation
+        angle = self.rng.randint (360)
+        scale = self.rng.uniform (-0.3, 0.3)
+        dx = self.rng.randint (-4, 4)
+        dy = self.rng.randint (-4, 4)
+
+        for vol in ret:
+            for i, img in enumerate (vol):
+                vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
+                                interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
 
         return ret
 
