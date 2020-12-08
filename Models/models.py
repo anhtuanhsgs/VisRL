@@ -85,6 +85,7 @@ def test ():
         def __init__ (self):
             self.lstm_feats = 0
             self.feats = [32, 32, 64, 64, 1024]
+            self.is3D = True
 
     args = ARG ()
     shape = [1, 6, 128, 128]
