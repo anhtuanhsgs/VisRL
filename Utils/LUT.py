@@ -20,7 +20,7 @@ class LUT ():
                     self.table [i] = np.array ([i, i, i, i])
             else:
                 self.table = np.zeros ((256, 4), dtype=np.int32)
-                step = 256 // len (initial)
+                step = 256 // (len (initial)-1)
                 l = 0
                 for i in range (len (initial)):
                     r = step * i
