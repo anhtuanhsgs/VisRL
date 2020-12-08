@@ -6,7 +6,7 @@ python main.py --env 3D_1rgba_LimitedModLimitedAug \
 --num-actions 4 --color-step 16 \
 --num-steps 6 --max-episode-length 6 \
 --size 32 32 \
---feats 64 64 128 128 512 \
+--feats 64 64 128 256 1024 \
 --save-period 100 --log-period 10 --train-log-period 100 \
 --log-dir logs/Dec2020/ --save-model-dir logs/trained_models/Dec2020/ \
 --load logs/trained_models/Dec2020/3D_1rgba_LimitedMod/7700.dat \
