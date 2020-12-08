@@ -4,7 +4,7 @@ python main.py --env chest_1rgba_LimitedModLimitedAug \
 --data 3DChest \
 --lr 1e-4 \
 --num-actions 4 --color-step 16 \
---num-steps 3 --max-episode-length 3 \
+--num-steps 6 --max-episode-length 6 \
 --size 128 128 \
 --feats 64 64 128 512 1024 \
 --save-period 100 --log-period 10 --train-log-period 100 \
