@@ -236,6 +236,8 @@ def setup_data (args, set_type):
     if args.data == "Chest":
         raw = read_imgs_from_path ("Data/Medical/" + set_type + "/A/")
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
+        print ("SHAPE:", raw [0].shape)
+        exit ()
         datasets = [raw]
         args.data_channel = 1
         args.lut_init = [0, 0, 0, 0, 10, 50, 50]
