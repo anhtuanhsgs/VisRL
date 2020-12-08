@@ -4,7 +4,7 @@
 import numpy as np
 
 class LUT ():
-    def __init__ (self, n=2, is3D=False, color_step=20, rng=None):
+    def __init__ (self, n=2, is3D=False, color_step=20, rng=None, initial=None):
         if rng is None:
             rng = np.random
         self.rng = rng
@@ -14,9 +14,20 @@ class LUT ():
             for i in range (256):
                 self.table [i] = np.array ([i, i, i])
         else:
-            self.table = np.zeros ((256, 4), dtype=np.int32)
-            for i in range (256):
-                self.table [i] = np.array ([i, i, i, i])
+            if args.initial is not None:
+                self.table = np.zeros ((256, 4), dtype=np.int32)
+                for i in range (256):
+                    self.table [i] = np.array ([i, i, i, i])
+            else:
+                step = 256 // len (initial)
+                l = 0
+                for i in range (len (initial)):
+                    r = step * i
+                    r = self.clip (r)
+                    self.table [r][3] = initial [i]
+                    self.linear_adjust_r (l, r, 3)
+                    l = r
+                self.linear_adjust_r (l, 255, 3)
         
         self.n = n
         self.step = 256 // (self.n - 1)

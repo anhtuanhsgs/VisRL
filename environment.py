@@ -65,8 +65,9 @@ class Debug_env (General_env):
 
         self.num_actions = config ["num_actions"]
         self.color_step = config ["color_step"]
-        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
+        self.lut_init = config ["lut_init"]
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
 
         self.step_cnt = 0
 
@@ -106,16 +107,16 @@ class Debug_env (General_env):
 
             ret.append (vol)
 
-        # Random rotation
-        angle = self.rng.randint (30)
-        scale = self.rng.uniform (0.8, 1.2)
-        dx = self.rng.randint (-4, 4)
-        dy = self.rng.randint (-4, 4)
+        # Full AUG
+        # angle = self.rng.randint (30)
+        # scale = self.rng.uniform (0.8, 1.2)
+        # dx = self.rng.randint (-4, 4)
+        # dy = self.rng.randint (-4, 4)
 
-        for vol in ret:
-            for i, img in enumerate (vol):
-                vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
-                                interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
+        # for vol in ret:
+        #     for i, img in enumerate (vol):
+        #         vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
+        #                         interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
 
         return ret
 
@@ -129,8 +130,8 @@ class Debug_env (General_env):
         self.ref, self.raw = self.aug3D ([self.ref, self.raw])
         self.ref = self.aug3D ([self.ref]) [0]
 
-        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
-        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D)
+        self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, self.lut_init)
+        self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, self.lut_init)
 
         self.ref_lut.rand_mod ()
 

@@ -15,6 +15,8 @@ from Models.models import *
 from test import test_func
 from train import train_func
 
+from Utils.LUT import LUT
+
 parser = argparse.ArgumentParser(description='A3C')
 parser.add_argument(
     '--env',
@@ -215,6 +217,7 @@ def setup_env_conf (args):
         "num_actions": args.num_actions,
         "color_step": args.color_step,
         "3D": "3D" in args.data,
+        "lut_init": args.lut_init, 
     }
 
     args.is3D = "3D" in args.data
@@ -232,18 +235,23 @@ def setup_data (args, set_type):
 
     if args.data == "cremi":
         raw = read_imgs_from_path ("Data/Cremi2D/" + set_type + "/A/")
+        raw = [ vol [::2, ::2, ::2] for vol in raw ]
         datasets = [raw]
         args.data_channel = 1
+        args.lut_init = [0, 0, 0, 0, 50, 50, 50]
 
     if args.data == "Random":
         raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
         datasets = [raw]
         args.data_channel = 1
+        args.lut_init = None
+
 
     if args.data == "3DVols":
         raw = read_imgs_from_path ("Data/3DVols/" + set_type + "/A/")
         datasets = [raw]
         args.data_channel = 1
+        args.lut_init = None
 
     return datasets
 
