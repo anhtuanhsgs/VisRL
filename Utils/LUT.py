@@ -14,15 +14,13 @@ class LUT ():
             for i in range (256):
                 self.table [i] = np.array ([i, i, i])
         else:
-            print ("IS 3D")
-            if initial is not None:
+            if initial is None:
                 self.table = np.zeros ((256, 4), dtype=np.int32)
                 for i in range (256):
                     self.table [i] = np.array ([i, i, i, i])
             else:
                 step = 256 // len (initial)
                 l = 0
-                print ("lut initial:", initial)
                 for i in range (len (initial)):
                     r = step * i
                     r = self.clip (r)
