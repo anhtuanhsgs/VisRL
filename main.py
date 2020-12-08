@@ -236,6 +236,7 @@ def setup_data (args, set_type):
     if args.data == "3DChest":
         raw = read_imgs_from_path ("Data/Medical/" + set_type + "/A/")
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
+        print (len (raw))
         datasets = [raw]
         args.data_channel = 1
         args.lut_init = [0, 0, 0, 0, 10, 50, 50]
