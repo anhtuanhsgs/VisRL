@@ -107,8 +107,8 @@ class Debug_env (General_env):
             ret.append (vol)
 
         # Random rotation
-        angle = self.rng.randint (360)
-        scale = self.rng.uniform (-0.3, 0.3)
+        angle = self.rng.randint (30)
+        scale = self.rng.uniform (0.8, 1.2)
         dx = self.rng.randint (-4, 4)
         dy = self.rng.randint (-4, 4)
 
