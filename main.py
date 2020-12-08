@@ -157,7 +157,7 @@ parser.add_argument (
 parser.add_argument (
     '--data',
     default='cremi',
-    choices=["cremi", "Random", "3DVols"]
+    choices=["cremi", "Random", "3DVols", "Chest"]
 )
 
 parser.add_argument (
@@ -233,10 +233,9 @@ def setup_data (args, set_type):
     path_test = None
     datasets = {}    
 
-    if args.data == "cremi":
-        raw = read_imgs_from_path ("Data/Cremi2D/" + set_type + "/A/")
+    if args.data == "Chest":
+        raw = read_imgs_from_path ("Data/Medical/" + set_type + "/A/")
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
-        print ("SHAPE", raw [0].shape)
         datasets = [raw]
         args.data_channel = 1
         args.lut_init = [0, 0, 0, 0, 10, 50, 50]
