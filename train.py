@@ -102,7 +102,7 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
                 R = torch.zeros (1, 1, args.num_actions * 3)
             else:
                 R = torch.zeros (1, 1, args.num_actions * 4)
-        else args.alpha_only:
+        else:
             R = torch.zeros (1, 1, args.num_actions)
 
         if not player.done:
