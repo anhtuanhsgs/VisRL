@@ -219,7 +219,7 @@ def setup_env_conf (args):
         "3D": "3D" in args.data,
         "ref_lut_init": args.ref_lut_init, 
         "lut_init": args.lut_init, 
-        "obs3D": "3D" in args.obs3D,
+        "obs3D": "3D" in args.model,
     }
 
     args.is3D = "3D" in args.data
