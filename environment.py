@@ -233,7 +233,7 @@ class Debug_env (General_env):
 
         for i in range (len (rgba_vol)):
             ret = self.clip (ret + rgba_vol [i,:,:,:3].astype (np.float32) 
-                        * rgba_vol [i,:,:,3:].astype (np.float32) * 0.3 / 255.0 
+                        * rgba_vol [i,:,:,3:].astype (np.float32) * 0.6 / 255.0 
                         * (1 - alpha))
             alpha = self.clip (alpha + rgba_vol [i,:,:,3:].astype (np.float32) / 255.0  * (1. - alpha))
 
