@@ -77,15 +77,21 @@ def test_func (args, shared_model, env_conf, datasets):
     player = Agent (None, env, args, None)
     player.gpu_id = gpu_id
 
+    nChan = 3
+    if args.is3D:
+        nChan = 4
+    if args.alpha_only:
+        nChan = 1
+
     if not args.is3D:
         player.model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 3)
+                                    num_actions=args.num_actions * nChan)
     elif not args.obs3D:
         player.model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 4)
+                                    num_actions=args.num_actions * nChan)
     elif args.obs3D:
         player.model = get_model (args, "Net3D", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 4)
+                                    num_actions=args.num_actions * nChan)
         
     player.state = player.env.reset ()
     player.state = torch.from_numpy (player.state).float ()

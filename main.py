@@ -206,6 +206,11 @@ parser.add_argument (
     type=int,
     default=20,
 )
+
+parser.add_argument (
+    "--alpha-only",
+    action="store_true"
+)
 ########################################## VIS ENV ##################################
 def setup_env_conf (args):
     env_conf = {
@@ -220,6 +225,7 @@ def setup_env_conf (args):
         "ref_lut_init": args.ref_lut_init, 
         "lut_init": args.lut_init, 
         "obs3D": "3D" in args.model,
+        "alpha_only": args.alpha_only,
     }
 
     args.is3D = "3D" in args.data
@@ -245,8 +251,8 @@ def setup_data (args, set_type):
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
         datasets = [raw]
         args.data_channel = 1
-        args.lut_init = [32, 32, 32, 32, 32, 32, 32]
-        args.ref_lut_init = [0, 0, 0, 0, 16, 48, 48]
+        args.lut_init = [24, 24, 24, 24, 24, 24, 24]
+        args.ref_lut_init = [0, 0, 0, 0, 0, 48, 48]
         args.obs3D = True
 
     if args.data == "Random":
@@ -283,15 +289,21 @@ def main (scripts, args):
 
     env_conf = setup_env_conf (args)
 
+    nChan = 3
+    if args.is3D:
+        nChan = 4
+    if args.alpha_only:
+        nChan = 1
+
     if not args.is3D:
         shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 3)
+                                    num_actions=args.num_actions * nChan)
     elif not args.obs3D:
          shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 4)
+                                    num_actions=args.num_actions * nChan)
     elif args.obs3D:
         shared_model = get_model (args, "Net3D", input_shape=env_conf["obs_shape"], 
-                                    num_actions=args.num_actions * 4)
+                                    num_actions=args.num_actions * nChan)
 
     if args.load:   
         saved_state = torch.load(

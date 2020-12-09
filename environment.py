@@ -27,6 +27,7 @@ class General_env ():
         self.DEBUG = config ['DEBUG']
         self.is3D = config ["3D"]
         self.obs3D = config ["obs3D"]
+        self.alpha_only = config ["alpha_only"]
 
         self.rng = np.random.RandomState (time_seed ())
         pass
@@ -68,6 +69,7 @@ class Debug_env (General_env):
         self.color_step = config ["color_step"]
         self.lut_init = config ["lut_init"]
         self.ref_lut_init = config ["ref_lut_init"]
+
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.ref_lut_init)
 
@@ -135,6 +137,10 @@ class Debug_env (General_env):
 
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.ref_lut_init)
+        if self.alpha_only:
+            for c in range (3):
+                for i in range (128):
+                    self.lut.table [i][c] = self.ref_lut.table [i][c]
 
         # self.lut.rand_mod ()
         self.ref_lut.rand_mod ()
@@ -168,6 +174,9 @@ class Debug_env (General_env):
                 idx, c = i//3, i%3
             else:
                 idx, c = i//4, i%4
+
+            if self.alpha_only:
+                idx, c = i, 3
 
             old_diff = self.lut.cmp (self.ref_lut, idx, c)
             
