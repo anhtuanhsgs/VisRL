@@ -245,7 +245,7 @@ def setup_data (args, set_type):
         raw = [ vol [::2, ::2, ::2] for vol in raw ]
         datasets = [raw]
         args.data_channel = 1
-        args.lut_init = [48, 48, 48, 48, 48, 48, 48]
+        args.lut_init = [32, 32, 32, 32, 32, 32, 32]
         args.ref_lut_init = [0, 0, 0, 0, 16, 48, 48]
         args.obs3D = True
 
