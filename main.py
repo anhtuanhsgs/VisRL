@@ -227,7 +227,7 @@ def setup_env_conf (args):
     if not args.obs3D:
         env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
     else:
-        env_conf ["obs_shape"] = [4 + 3] + env_conf ["size"]
+        env_conf ["obs_shape"] = [4] + env_conf ["size"]
 
     args.log_dir += "/" + args.env + "/" 
     args.save_model_dir += '/' + args.env + '/'

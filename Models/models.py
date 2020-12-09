@@ -54,9 +54,9 @@ class ActorCritic (nn.Module):
             raw_brach = self.backbone1 (x [:, :3, :, :])
             ref_brach = self.backbone2 (x [:, 3:, :, :])
         else:
-            raw_brach = self.backbone1 (x [:, :4, :, :, :])
-            ref_brach = self.backbone2 (x [:, 4:, :, :, :].squeeze (2))
-
+            raw_brach = self.backbone1 (x [:, :, :-1, :, :]) # 4xDxHxW
+            ref_brach = self.backbone2 (x [:, :3, -1, :, :]) # 3xHxW
+  
         if self.use_lstm:
             hx, cx = self.lstm (x, (hx, cx))
             x = hx
@@ -105,10 +105,10 @@ def test ():
             self.obs3D = True
 
     args = ARG ()
-    shape = [1, 7, 128, 128, 128]
+    shape = [1, 4, 129, 128, 128]
     
 
-    model = get_model (args, "ENet", input_shape=shape[1:], num_actions=3)
+    model = get_model (args, "Net3D", input_shape=shape[1:], num_actions=3)
 
     inp = torch.randn (shape)
     value, logit = model (inp)
