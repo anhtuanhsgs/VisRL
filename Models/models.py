@@ -39,7 +39,7 @@ class ActorCritic (nn.Module):
         else:
             self.use_lstm = False
 
-        latent_dim = backbone1.out_dim * backbone2.out_dim
+        latent_dim = backbone1.out_dim + backbone2.out_dim
         self.latent = nn.Linear (latent_dim, 64)
 
         self.actor = nn.Linear (64, num_actions * 3)
