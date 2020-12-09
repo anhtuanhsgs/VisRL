@@ -63,6 +63,11 @@ class ActorCritic (nn.Module):
             hx, cx = self.lstm (x, (hx, cx))
             x = hx
 
+        print (ref_brach.shape)
+        print (raw_brach.shape)
+        print (self.backbone1.out_dim)
+        print (self.backbone2.out_dim)
+
         x = torch.cat ([raw_brach, ref_brach], 1)
         x = self.latent (x)
 
