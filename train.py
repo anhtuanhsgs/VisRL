@@ -97,10 +97,13 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
                 with torch.cuda.device (gpu_id):
                     player.state = player.state.cuda ()
 
-        if not args.is3D:
-            R = torch.zeros (1, 1, args.num_actions * 3)
-        else:
-            R = torch.zeros (1, 1, args.num_actions * 4)
+        if not args.alpha_only:
+            if not args.is3D:
+                R = torch.zeros (1, 1, args.num_actions * 3)
+            else:
+                R = torch.zeros (1, 1, args.num_actions * 4)
+        else args.alpha_only:
+            R = torch.zeros (1, 1, args.num_actions)
 
         if not player.done:
             value, _ = player.model(Variable(player.state.unsqueeze(0)))
@@ -114,10 +117,13 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
         policy_loss = 0
         value_loss = 0
         
-        if not args.is3D:   
-            gae = torch.zeros(1, 1, args.num_actions * 3)
+        if not args.alpha_only:
+            if not args.is3D:   
+                gae = torch.zeros(1, 1, args.num_actions * 3)
+            else:
+                gae = torch.zeros(1, 1, args.num_actions * 4)
         else:
-            gae = torch.zeros(1, 1, args.num_actions * 4)
+            gae = torch.zeros (1, 1, args.num_actions)
 
         if gpu_id >= 0:
             with torch.cuda.device(gpu_id):

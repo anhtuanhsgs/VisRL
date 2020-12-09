@@ -154,6 +154,9 @@ class Debug_env (General_env):
             self.sum_rewards = np.zeros ([self.num_actions * 3], dtype=np.float32)
         else:
             self.sum_rewards = np.zeros ([self.num_actions * 4], dtype=np.float32)
+
+        if self.alpha_only:
+            self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
