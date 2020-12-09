@@ -26,6 +26,7 @@ class General_env ():
         self.obs_shape = config ['obs_shape']
         self.DEBUG = config ['DEBUG']
         self.is3D = config ["3D"]
+        self.obs3D = config ["obs3D"]
 
         self.rng = np.random.RandomState (time_seed ())
         pass
@@ -153,7 +154,6 @@ class Debug_env (General_env):
         return self.observation ()
 
     def step (self, action):
-
         self.action = action
         done = False
         if (self.step_cnt == self.T - 1):
@@ -204,11 +204,19 @@ class Debug_env (General_env):
             ref = np.transpose (self.ref_lut.apply (self.ref), [2, 0, 1])
             obs = np.concatenate ([raw, ref], 0)
         else:
-            raw = self.rasterize (self.lut.apply (self.raw))
-            raw = np.transpose (raw, [2, 0, 1])
-            ref = self.rasterize (self.ref_lut.apply (self.ref))
-            ref = np.transpose (ref, [2, 0, 1])
-            obs = np.concatenate ([raw, ref], 0)
+            if not self.obs3D:
+                raw = self.rasterize (self.lut.apply (self.raw))
+                raw = np.transpose (raw, [2, 0, 1])
+                ref = self.rasterize (self.ref_lut.apply (self.ref))
+                ref = np.transpose (ref, [2, 0, 1])
+                obs = np.concatenate ([raw, ref], 0)
+            else:
+                raw = self.lut.apply (self.raw)
+                raw = np.transpose (raw, [3, 0, 1, 2])
+                ref = self.rasterize (self.ref_lut.apply (self.ref))
+                ref = np.expand_dims (np.transpose (ref, [2, 0, 1]), 1)
+                obs = np.concatenate ([raw, ref], 1)
+                
         return obs / 255.0
 
     def clip (self, x, l=0, r=255):
@@ -218,8 +226,7 @@ class Debug_env (General_env):
         ret = np.zeros (rgba_vol.shape [1:3] + (3,), dtype=np.float32)
         alpha = np.zeros (rgba_vol.shape [1:3] + (1,), dtype=np.float32)
 
-        alpha += 0.001
-        
+        alpha += 0.001     
 
         for i in range (len (rgba_vol)):
             ret = self.clip (ret + rgba_vol [i,:,:,:3].astype (np.float32) 
@@ -231,7 +238,7 @@ class Debug_env (General_env):
 
     def render (self):
         if not self.is3D:
-            raw = self.lut.apply (self.raw) 
+            raw = self.lut.apply (self.raw)
             ref = self.ref_lut.apply (self.ref) 
             img = np.concatenate ([raw, ref], 1)
             img = img.astype (np.uint8)

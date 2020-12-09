@@ -6,6 +6,7 @@ import numpy as np
 import time, copy
 
 from .ENet import ENet
+from .Net3D import Net3D
 
 class outconv(nn.Module):
     def __init__(self, in_ch, out_ch, kernel_size=3, is3D=False, bias=True):
@@ -24,6 +25,7 @@ class ActorCritic (nn.Module):
         super (ActorCritic, self).__init__ ()
         self.is3D = args.is3D
         self.name = backbone1.name
+        self.obs3D = args.obs3D
         
         self.backbone1 = backbone1
         self.backbone2 = backbone2
@@ -37,7 +39,7 @@ class ActorCritic (nn.Module):
         else:
             self.use_lstm = False
 
-        latent_dim = backbone1.out_dim * 2
+        latent_dim = backbone1.out_dim * backbone2.out_dim
         self.latent = nn.Linear (latent_dim, 64)
 
         self.actor = nn.Linear (64, num_actions * 3)
@@ -47,8 +49,13 @@ class ActorCritic (nn.Module):
     def forward (self, x):
         if (self.use_lstm):
             x, (hx, cx) = x
-        raw_brach = self.backbone1 (x [:, :3, :, :])
-        ref_brach = self.backbone2 (x [:, 3:, :, :])
+
+        if not self.obs3D:
+            raw_brach = self.backbone1 (x [:, :3, :, :])
+            ref_brach = self.backbone2 (x [:, 3:, :, :])
+        else:
+            raw_brach = self.backbone1 (x [:, :4, :, :, :])
+            ref_brach = self.backbone2 (x [:, 4:, :, :, :].squeeze (2))
 
         if self.use_lstm:
             hx, cx = self.lstm (x, (hx, cx))
@@ -78,6 +85,15 @@ def get_model (args, name, input_shape, num_actions):
         backbone2 = ENet (in_dims=inp_shape_split, feats=args.feats)
         model =  ActorCritic (args, backbone1, backbone2, num_actions)
 
+    if name == "Net3D":
+        inp_shape_split_1 = copy.deepcopy (input_shape)
+        inp_shape_split_1 [0] = 4
+        inp_shape_split_2 = [3, input_shape [2], input_shape [3]]
+
+        backbone1 = Net3D (in_dims=inp_shape_split, feats=args.feats)
+        backbone2 = ENet (in_dims=inp_shape_split, feats=args.feats)
+        model =  ActorCritic (args, backbone1, backbone2, num_actions)        
+
     return model
 
 def test ():
@@ -86,9 +102,10 @@ def test ():
             self.lstm_feats = 0
             self.feats = [32, 32, 64, 64, 1024]
             self.is3D = True
+            self.obs3D = True
 
     args = ARG ()
-    shape = [1, 6, 128, 128]
+    shape = [1, 7, 128, 128, 128]
     
 
     model = get_model (args, "ENet", input_shape=shape[1:], num_actions=3)

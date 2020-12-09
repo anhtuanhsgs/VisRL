@@ -151,7 +151,7 @@ parser.add_argument (
 parser.add_argument (
     '--model',
     default='ENet',
-    choices=["ENet"]
+    choices=["ENet", "Net3D"]
 )
 
 parser.add_argument (
@@ -219,10 +219,15 @@ def setup_env_conf (args):
         "3D": "3D" in args.data,
         "ref_lut_init": args.ref_lut_init, 
         "lut_init": args.lut_init, 
+        "obs3D": "3D" in args.obs3D,
     }
 
     args.is3D = "3D" in args.data
-    env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
+
+    if not args.obs3D:
+        env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
+    else:
+        env_conf ["obs_shape"] = [4 + 3] + env_conf ["size"]
 
     args.log_dir += "/" + args.env + "/" 
     args.save_model_dir += '/' + args.env + '/'
@@ -241,6 +246,7 @@ def setup_data (args, set_type):
         args.data_channel = 1
         args.lut_init = [48, 48, 48, 48, 48, 48, 48]
         args.ref_lut_init = [0, 0, 0, 0, 16, 48, 48]
+        args.obs3D = True
 
     if args.data == "Random":
         raw = read_imgs_from_path ("Data/Random/" + set_type + "/A/")
@@ -248,7 +254,7 @@ def setup_data (args, set_type):
         args.data_channel = 1
         args.lut_init = None
         args.ref_lut_init = None
-
+        args.obs3D = False
 
     if args.data == "3DVols":
         raw = read_imgs_from_path ("Data/3DVols/" + set_type + "/A/")
@@ -256,6 +262,7 @@ def setup_data (args, set_type):
         args.data_channel = 1
         args.lut_init = None
         args.ref_lut_init = None
+        args.obs3D = False
 
     return datasets
 
