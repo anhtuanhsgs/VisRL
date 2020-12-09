@@ -10,7 +10,7 @@ class Net3D (nn.Module):
         super (Net3D, self).__init__ ()
         self.name = "Net3D"
         self.conv1 = nn.Conv3d(in_dims [0], feats[0], 5, stride=1, padding=2)
-        self.maxp1 = nn.MaxPool3d(2, 2)
+        self.maxp1 = nn.MaxPool3d(4, 4)
         self.conv2 = nn.Conv3d(feats[0], feats[1], 5, stride=1, padding=1)
         self.maxp2 = nn.MaxPool3d(2, 2)
         self.conv3 = nn.Conv3d(feats[1], feats[2], 4, stride=1, padding=1)
@@ -20,7 +20,7 @@ class Net3D (nn.Module):
         # self.conv5 = nn.Conv3d(feats[2], feats[3], 3, stride=1, padding=1)
         # self.maxp4 = nn.MaxPool3d(2, 2)
 
-        H_dim = m.ceil (in_dims [1] / 16) - 1
+        H_dim = m.ceil (in_dims [1] / 32) - 1
         self.out_dim = feats [-1]
 
         self.latern = nn.Linear (H_dim * H_dim * H_dim * feats [-2], feats[-1])
