@@ -5,6 +5,7 @@ python main.py --env chest_1rgba_LimitedModLimitedAug \
 --model Net3D \
 --lr 1e-4 \
 --num-actions 7 --color-step 16 \
+--alpha-only \
 --num-steps 4 --max-episode-length 4 \
 --size 128 128 128 \
 --feats 64 64 128 512 1024 \
