@@ -54,8 +54,6 @@ class ActorCritic (nn.Module):
             raw_brach = self.backbone1 (x [:, :3, :, :])
             ref_brach = self.backbone2 (x [:, 3:, :, :])
         else:
-            print (x [:, :, :-1, :, :].shape)
-            print (x [:, :3, -1, :, :].shape)
             raw_brach = self.backbone1 (x [:, :, :-1, :, :]) # 4xDxHxW
             ref_brach = self.backbone2 (x [:, :3, -1, :, :]) # 3xHxW
   
@@ -94,6 +92,7 @@ def get_model (args, name, input_shape, num_actions):
 
     if name == "Net3D":
         inp_shape_split_1 = copy.deepcopy (input_shape)
+        inp_shape_split_1 [1] -= 1
         inp_shape_split_1 [0] = 4
         inp_shape_split_2 = [3, input_shape [2], input_shape [3]]
 
