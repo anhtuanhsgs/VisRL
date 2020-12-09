@@ -6,7 +6,7 @@ import torch.optim as optim
 import math as m
 
 class Net3D (nn.Module):
-	def __init__ (self, in_dims, feats):
+    def __init__ (self, in_dims, feats):
         super (Net3D, self).__init__ ()
         self.name = "Net3D"
         self.conv1 = nn.Conv3d(in_dims [0], feats[0], 5, stride=1, padding=2)
