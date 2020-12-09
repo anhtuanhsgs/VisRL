@@ -228,6 +228,7 @@ def setup_env_conf (args):
         env_conf ["obs_shape"] = [args.data_channel * 2 * 3] + env_conf ["size"]
     else:
         env_conf ["obs_shape"] = [4] + env_conf ["size"]
+        env_conf ["obs_shape"] [1] += 1
 
     args.log_dir += "/" + args.env + "/" 
     args.save_model_dir += '/' + args.env + '/'
@@ -286,7 +287,7 @@ def main (scripts, args):
         shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
                                     num_actions=args.num_actions * 3)
     else:
-         shared_model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
+         shared_model = get_model (args, "Net3D", input_shape=env_conf["obs_shape"], 
                                     num_actions=args.num_actions * 4)
 
     if args.load:   

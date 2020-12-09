@@ -61,11 +61,6 @@ class ActorCritic (nn.Module):
             hx, cx = self.lstm (x, (hx, cx))
             x = hx
 
-        print (ref_brach.shape)
-        print (raw_brach.shape)
-        print (self.backbone1.out_dim)
-        print (self.backbone2.out_dim)
-
         x = torch.cat ([raw_brach, ref_brach], 1)
         x = self.latent (x)
 
@@ -111,7 +106,7 @@ def test ():
             self.obs3D = True
 
     args = ARG ()
-    shape = [1, 4, 129, 128, 128]
+    shape = [1, 4, 81, 80, 80]
     
 
     model = get_model (args, "Net3D", input_shape=shape[1:], num_actions=3)
