@@ -90,8 +90,8 @@ def get_model (args, name, input_shape, num_actions):
         inp_shape_split_1 [0] = 4
         inp_shape_split_2 = [3, input_shape [2], input_shape [3]]
 
-        backbone1 = Net3D (in_dims=inp_shape_split, feats=args.feats)
-        backbone2 = ENet (in_dims=inp_shape_split, feats=args.feats)
+        backbone1 = Net3D (in_dims=inp_shape_split_1, feats=args.feats)
+        backbone2 = ENet (in_dims=inp_shape_split_2, feats=args.feats)
         model =  ActorCritic (args, backbone1, backbone2, num_actions)        
 
     return model
