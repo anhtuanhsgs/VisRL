@@ -214,12 +214,12 @@ class Debug_env (General_env):
                 raw = self.lut.apply (self.raw)
                 raw = np.transpose (raw, [3, 0, 1, 2])
                 ref = self.rasterize (self.ref_lut.apply (self.ref))
-                dummy = np.zeros (ref.shape[:2] + [1,])
+                dummy = np.zeros (ref.shape[:2] + (1,), dtype=ref.dtype)
                 ref = np.concatenate ([ref, dummy], -1)
                 ref = np.expand_dims (np.transpose (ref, [2, 0, 1]), 1)
 
                 obs = np.concatenate ([raw, ref], 1)
-                
+                print (obs.shape)
         return obs / 255.0
 
     def clip (self, x, l=0, r=255):
