@@ -97,8 +97,8 @@ class Debug_env (General_env):
 
         ret = []
         for vol in vols:
-            vol = np.rot90 (vol, num_rot_yz, axes=(0,1))
             vol = np.rot90 (vol, num_rot_xy, axes=(1,2))
+            vol = np.rot90 (vol, num_rot_yz, axes=(0,1))
 
             if useFlipZ:
                 vol = np.flip (vol, axis=0)
