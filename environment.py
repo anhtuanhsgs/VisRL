@@ -90,7 +90,8 @@ class Debug_env (General_env):
 
     def aug3D (self, vols):
         num_rot_xy = self.rng.randint (4)
-        num_rot_yz = self.rng.randint (4)
+        # num_rot_yz = self.rng.randint (4)
+        num_rot_yz = self.rng.choice ([1, 3], 1) [0]
         useFlipX = self.rng.randint (2)
         useFlipY = self.rng.randint (2)
         useFlipZ = self.rng.randint (2)
