@@ -1,6 +1,6 @@
 cat $0
 python main.py --env chest_1rgba_LimitedModLimitedAug \
---gpu-id 0 1 2 3 --workers 0 --valid-gpu 0 \
+--gpu-id 0 1 2 3 --workers 12 --valid-gpu 0 \
 --data 3DChest \
 --model Net3D \
 --lr 1e-4 \

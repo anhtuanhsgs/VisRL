@@ -47,9 +47,6 @@ class ActorCritic (nn.Module):
 
 
     def forward (self, x):
-        print (x.shape)
-        print (x [:, :, :-1, :, :].shape)
-        print (x [:, :3, -1, :, :].shape)
         
         if (self.use_lstm):
             x, (hx, cx) = x
