@@ -54,6 +54,8 @@ class ActorCritic (nn.Module):
             raw_brach = self.backbone1 (x [:, :3, :, :])
             ref_brach = self.backbone2 (x [:, 3:, :, :])
         else:
+            print (x [:, :, :-1, :, :].shape)
+            print (x [:, :3, -1, :, :].shape)
             raw_brach = self.backbone1 (x [:, :, :-1, :, :]) # 4xDxHxW
             ref_brach = self.backbone2 (x [:, :3, -1, :, :]) # 3xHxW
   
