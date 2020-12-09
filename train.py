@@ -41,9 +41,13 @@ def train_func (rank, args, shared_model, optimizer, env_conf, datasets):
     if not args.is3D:
         player.model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
                                             num_actions=args.num_actions * 3)
-    else:
+    elif not args.obs3D:
         player.model = get_model (args, "ENet", input_shape=env_conf["obs_shape"], 
                                     num_actions=args.num_actions * 4)
+    elif args.obs3D:
+        player.model = get_model (args, "Net3D", input_shape=env_conf["obs_shape"], 
+                                    num_actions=args.num_actions * 4)
+        
     player.state = player.env.reset ()
     player.state = torch.from_numpy (player.state).float ()
 
