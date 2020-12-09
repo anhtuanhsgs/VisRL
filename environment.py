@@ -143,7 +143,7 @@ class Debug_env (General_env):
         self.ref_lut.rand_mod ()
         if self.alpha_only:
             for c in range (3):
-                for i in range (128):
+                for i in range (256):
                     self.lut.table [i][c] = self.ref_lut.table [i][c]
 
         self.diff_t0 = self.ref_lut.table - self.lut.table
