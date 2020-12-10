@@ -269,6 +269,9 @@ def setup_data (args, set_type):
         args.data_channel = 1
         args.lut_init = None
         args.ref_lut_init = None
+
+        print (args.lut_init, args.ref_lut_init)
+        
         args.obs3D = False
 
     return datasets
