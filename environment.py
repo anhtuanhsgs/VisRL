@@ -159,6 +159,9 @@ class Debug_env (General_env):
                 if self.alpha_only:
                     idx, c = i, 3
 
+                rate = 0.05
+                if self.alpha_only:
+                    rate = 0.13
                 if self.lut.table [idx][c] > self.ref_lut.table [idx][c]:
                     if self.rng.rand () > 0.05:
                         actions [i] = 0
