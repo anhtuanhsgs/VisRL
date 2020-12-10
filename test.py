@@ -184,7 +184,7 @@ def test_func (args, shared_model, env_conf, datasets):
 
             deploy_list = player.env.deploy
             if args.save_sample:
-                for vol, ref_img in deploy_list:
+                for vol, ref_img, lut, _ in deploy_list:
                     io.imsave (args.log_dir + "/" + str (num_tests) + "_vol.tif", vol)
                     io.imsave (args.log_dir + "/" + str (num_tests) + "_ref.tif", ref_img)
                     plt.figure (figsize=(10,10))
