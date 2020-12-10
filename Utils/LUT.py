@@ -37,7 +37,7 @@ class LUT ():
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
         self.mod_rate = 0.6
-        self.mode = mode
+        self.alpha_only = alpha_only
 
     def apply (self, img):
         ret = self.table [img]
