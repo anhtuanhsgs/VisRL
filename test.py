@@ -184,18 +184,18 @@ def test_func (args, shared_model, env_conf, datasets):
 
             deploy_list = player.env.deploy
             if args.save_sample:
-                for vol, ref_img, lut, _ in deploy_list:
-                    io.imsave (args.log_dir + "/" + str (num_tests) + "_vol.tif", vol)
-                    io.imsave (args.log_dir + "/" + str (num_tests) + "_ref.tif", ref_img)
+                for stepi, (vol, ref_img, lut, _) in enumerate (deploy_list):
+                    io.imsave (args.log_dir + "/" + str (num_tests) + "_vol_" + str (stepi) + ".tif", vol)
+                    io.imsave (args.log_dir + "/" + str (num_tests) + "_ref_" + str (stepi) + ".tif", ref_img)
                     plt.figure (figsize=(10,10))
-                    plt.plot (range (256), player.env.lut.table [...,2], 'b')
-                    plt.plot (range (256), player.env.lut.table [...,1], 'g')
-                    plt.plot (range (256), player.env.lut.table [...,0], 'r')
-                    plt.plot (range (256), player.env.lut.table [...,3], 'gray')
+                    plt.plot (range (256), lut.table [...,2], 'b')
+                    plt.plot (range (256), lut.table [...,1], 'g')
+                    plt.plot (range (256), table [...,0], 'r')
+                    plt.plot (range (256), table [...,3], 'gray')
                     plt.ylabel('Mapping value')
                     plt.xlabel('Voxel intensity')
                     plt.title ("Transfer function visualization")
-                    plt.savefig ("Ref LUT")
+                    plt.savefig ("Ref_LUT" + "_" + str (num_tests) + "_" + str (stepi) + ".png")
 
             renderlist = []
             reward_sum = 0
