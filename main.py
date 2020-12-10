@@ -286,9 +286,9 @@ def main (scripts, args):
     torch.cuda.manual_seed(args.seed)
     mp.set_start_method('spawn')
 
-    if not args.deploy:
-        train_datasets = setup_data (args, "train")
-        valid_datasets = setup_data (args, "valid")
+    # if not args.deploy:
+    train_datasets = setup_data (args, "train")
+    valid_datasets = setup_data (args, "valid")
 
     env_conf = setup_env_conf (args)
 
