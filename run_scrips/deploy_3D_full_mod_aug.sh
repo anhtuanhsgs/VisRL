@@ -10,5 +10,5 @@ python main.py --env deploy_3D_1rgba_FullModAug \
 --save-sample \
 --save-period 100 --log-period 1 --train-log-period 100 \
 --log-dir logs/Dec2020/ --save-model-dir logs/trained_models/Dec2020/ \
---load logs/trained_models/Dec2020/3D_1rgba_FullModAug/900.dat \
+--load logs/trained_models/Dec2020/3D_1rgba_FullModAug/1000.dat \
 \

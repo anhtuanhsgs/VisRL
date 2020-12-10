@@ -115,8 +115,8 @@ class Debug_env (General_env):
             ret.append (vol)
 
         # Full AUG
-        angle = self.rng.randint (10)
-        scale = self.rng.uniform (0.9, 1.1)
+        angle = self.rng.randint (30)
+        scale = self.rng.uniform (0.8, 1.2)
         dx = self.rng.randint (-4, 4)
         dy = self.rng.randint (-4, 4)
 
@@ -162,7 +162,12 @@ class Debug_env (General_env):
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
-        self.deploy = [(self.lut.apply (self.raw), self.rasterize (self.ref_lut.apply (self.ref)))]
+        self.deploy = [
+                        (self.lut.apply (self.raw), 
+                        self.rasterize (self.ref_lut.apply (self.ref))),
+                        copy.deepcopy (self.lut.table),
+                        copy.deepcopy (self.ref_lut.table),
+                    ]
 
         self.reset_end ()
         return self.observation ()
