@@ -210,10 +210,16 @@ class Debug_env (General_env):
                 rewards [i] -= color_step
             # rewards [i] = 1.0 * (old_diff - new_diff)
 
-            self.deploy += [(self.lut.apply (self.raw), 
-                                self.rasterize (self.ref_lut.apply (self.ref)), 
-                                copy.deepcopy (self.lut.table), 
-                                copy.deepcopy (self.ref_lut.table))]
+            if not self.is3D and i % 3 == 0:
+                self.deploy += [(self.lut.apply (self.raw), 
+                                    self.rasterize (self.ref_lut.apply (self.ref)), 
+                                    copy.deepcopy (self.lut.table), 
+                                    copy.deepcopy (self.ref_lut.table))]
+            elif (not self.alpha_only) and (i % 4 == 0):
+                self.deploy += [(self.lut.apply (self.raw), 
+                                    self.rasterize (self.ref_lut.apply (self.ref)), 
+                                    copy.deepcopy (self.lut.table), 
+                                    copy.deepcopy (self.ref_lut.table))]
 
         self.actions.append (self.action)
         rewards /= color_step
