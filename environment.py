@@ -146,6 +146,8 @@ class Debug_env (General_env):
             nactions = self.num_actions * 3
         else:
             nactions = self.num_actions * 4
+        if self.alpha_only:
+            nactions = self.num_actions
 
         for j in range (self.T):
             actions = [1] * nactions 
@@ -178,7 +180,8 @@ class Debug_env (General_env):
 
         if self.alpha_only:
             self.ref, self.raw = self.aug3D ([self.ref, self.raw])
-        self.ref = self.aug3D ([self.ref]) [0]
+        if not self.alpha_only:
+            self.ref = self.aug3D ([self.ref]) [0]
         alpha_only = self.alpha_only
 
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init, alpha_only=alpha_only)
