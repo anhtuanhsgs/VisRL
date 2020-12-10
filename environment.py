@@ -127,6 +127,34 @@ class Debug_env (General_env):
 
         return ret
 
+    def step_ (self):
+        self.rng.seed (10)
+
+        if not self.is3D:
+            nactions = np.zeros ([self.num_actions * 3], dtype=np.float32)
+        else:
+            nactions = np.zeros ([self.num_actions * 4], dtype=np.float32)
+
+        for j in range (self.T):
+            actions = [1] * nactions
+            for j in range (len (actions)):
+                if not self.is3D:
+                    idx, c = i//3, i%3
+                else:
+                    idx, c = i//4, i%4
+
+                if self.lut.table [i][c] > self.ref_lut.table [i][c]:
+                    if self.rng.rand () > 0.8:
+                        actions [j] = 0
+                if self.lut.table [i][c] < self.ref_lut.table [i][c]:
+                    if self.rng.rand () > 0.8:
+                        actions [j] = 2
+
+        self.step (actions)
+        ret = copy.deepcopy (self.deploy)
+        self.reset ()
+        return ret
+
     def reset (self, angle=None):
         idx = self.rng.randint (len (self.raw_list))
         if (self.DEBUG):
