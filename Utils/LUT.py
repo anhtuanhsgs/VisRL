@@ -4,7 +4,7 @@
 import numpy as np
 
 class LUT ():
-    def __init__ (self, n=2, is3D=False, color_step=20, rng=None, initial=None):
+    def __init__ (self, n=2, is3D=False, color_step=20, rng=None, initial=None, alpha_only=None):
         if rng is None:
             rng = np.random
         self.rng = rng
@@ -37,6 +37,7 @@ class LUT ():
         self.mod = np.zeros ((self.n), dtype=np.int32)
         self.color_step=color_step
         self.mod_rate = 0.6
+        self.mode = mode
 
     def apply (self, img):
         ret = self.table [img]
@@ -56,18 +57,20 @@ class LUT ():
                 r = self.clip (i * step)
                 
                 mod = 0
-                # Limited mod
-                # mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
-                # self.table [r][c] += mod
+                if self.alpha_only:
+                    # Limited mod
+                    mod = self.rng.choice  (list (range (-4, 5)), 1) [0] * self.color_step
+                    self.table [r][c] += mod
 
                 ## Fixed mod
                 # mod = self.rng.choice  ([-1 * 3, 0, 1 * 3], 1) [0] * self.color_step
                 # self.table [r][c] += mod             
                 
-                # Full mod
-                mod = self.rng.randint (-256, 256)
-                self.table [r][c] += mod 
-                self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
+                if not self.alpha_only:
+                    # Full mod
+                    mod = self.rng.randint (-256, 256)
+                    self.table [r][c] += mod 
+                    self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
                 
                 self.table [r][c] = self.clip (self.table [r][c])
                 self.mod [i] = mod
