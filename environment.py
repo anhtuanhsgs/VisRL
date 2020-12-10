@@ -135,6 +135,8 @@ class Debug_env (General_env):
         else:
             nactions = np.zeros ([self.num_actions * 4], dtype=np.float32)
 
+        print (nactions)
+
         for j in range (self.T):
             actions = [1] * nactions
             for i in range (len (actions)):
