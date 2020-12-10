@@ -154,10 +154,10 @@ class Debug_env (General_env):
                     idx, c = i//4, i%4
 
                 if self.lut.table [idx][c] > self.ref_lut.table [idx][c]:
-                    if self.rng.rand () > 0.1:
+                    if self.rng.rand () > 0.05:
                         actions [i] = 0
                 if self.lut.table [idx][c] < self.ref_lut.table [idx][c]:
-                    if self.rng.rand () > 0.1:
+                    if self.rng.rand () > 0.05:
                         actions [i] = 2
 
             self.step (actions)
