@@ -182,8 +182,10 @@ def test_func (args, shared_model, env_conf, datasets):
                     for tag, value in log_info.items ():
                         logger.scalar_summary (tag, value, num_tests)
 
-            deploy_list = player.env.deploy
+            
             if args.save_sample:
+                deploy_list = player.env.deploy
+                print (len (deploy_list))
                 for stepi, (vol, ref_img, lut, _) in enumerate (deploy_list):
                     io.imsave (args.log_dir + "/" + str (num_tests) + "_vol_" + str (stepi) + ".tif", vol)
                     io.imsave (args.log_dir + "/" + str (num_tests) + "_ref_" + str (stepi) + ".tif", ref_img)
