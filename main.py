@@ -167,6 +167,12 @@ parser.add_argument (
 )
 
 parser.add_argument (
+    '--save-sample',
+    action='store_true',
+    help='Enable for test set deployment',
+)
+
+parser.add_argument (
     '--lstm-feats',
     type=int,
     default=0,
@@ -270,8 +276,6 @@ def setup_data (args, set_type):
         args.lut_init = None
         args.ref_lut_init = None
 
-        print (args.lut_init, args.ref_lut_init)
-        
         args.obs3D = False
 
     return datasets
@@ -286,9 +290,9 @@ def main (scripts, args):
     torch.cuda.manual_seed(args.seed)
     mp.set_start_method('spawn')
 
-    # if not args.deploy:
-    train_datasets = setup_data (args, "train")
-    valid_datasets = setup_data (args, "valid")
+    if not args.deploy:
+        train_datasets = setup_data (args, "train")
+        valid_datasets = setup_data (args, "valid")
 
     env_conf = setup_env_conf (args)
 
@@ -340,7 +344,7 @@ def main (scripts, args):
     time.sleep(0.1)
 
 
-    if not args.deploy:
+    if not args.save_sample:
         for rank in range(0, args.workers):
             p = mp.Process(
                 target=train_func, args=(rank, args, shared_model, optimizer, env_conf, train_datasets))
