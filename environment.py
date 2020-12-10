@@ -137,7 +137,7 @@ class Debug_env (General_env):
 
         for j in range (self.T):
             actions = [1] * nactions
-            for j in range (len (actions)):
+            for i in range (len (actions)):
                 if not self.is3D:
                     idx, c = i//3, i%3
                 else:
