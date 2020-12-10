@@ -8,7 +8,7 @@ python main.py --env deploy_3D_1rgba_FullModAug \
 --size 32 32 \
 --feats 64 64 128 128 512 \
 --save-sample \
---save-period 100 --log-period 10 --train-log-period 100 \
+--save-period 100 --log-period 1 --train-log-period 100 \
 --log-dir logs/Dec2020/ --save-model-dir logs/trained_models/Dec2020/ \
 --load logs/trained_models/Dec2020/3D_1rgba_FullModAug/900.dat \
 \
