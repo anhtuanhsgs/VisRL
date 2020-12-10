@@ -134,7 +134,7 @@ class Debug_env (General_env):
             nactions = self.num_actions * 3
         else:
             nactions = self.num_actions * 4
-
+        print (nactions)
         for j in range (self.T):
             actions = [1] * nactions
             for i in range (len (actions)):
