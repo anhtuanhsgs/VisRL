@@ -75,6 +75,8 @@ class Debug_env (General_env):
 
         self.step_cnt = 0
 
+        self.deploy = []
+
         self.seed (seed)
 
     def aug (self, image, mask):
@@ -113,15 +115,15 @@ class Debug_env (General_env):
             ret.append (vol)
 
         # Full AUG
-        # angle = self.rng.randint (10)
-        # scale = self.rng.uniform (0.9, 1.1)
-        # dx = self.rng.randint (-4, 4)
-        # dy = self.rng.randint (-4, 4)
+        angle = self.rng.randint (10)
+        scale = self.rng.uniform (0.9, 1.1)
+        dx = self.rng.randint (-4, 4)
+        dy = self.rng.randint (-4, 4)
 
-        # for vol in ret:
-        #     for i, img in enumerate (vol):
-        #         vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
-        #                         interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
+        for vol in ret:
+            for i, img in enumerate (vol):
+                vol [i] = F.shift_scale_rotate (img, angle, scale, dx, dy, 
+                                interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101)
 
         return ret
 
@@ -160,6 +162,7 @@ class Debug_env (General_env):
         self.rewards = []
         self.step_cnt = 0
         self.actions = []
+        self.deploy = [(self.lut.apply (self.raw), self.rasterize (self.ref_lut.apply (self.ref)))]
 
         self.reset_end ()
         return self.observation ()
@@ -183,7 +186,7 @@ class Debug_env (General_env):
                 idx, c = i, 3
 
             old_diff = self.lut.cmp (self.ref_lut, idx, c)
-            
+
             if (action [i] == 0):
                 self.lut.modify (idx, c, -color_step)
             if (action [i] == 2):
@@ -201,6 +204,8 @@ class Debug_env (General_env):
             elif (old_diff - new_diff) < 0:
                 rewards [i] -= color_step
             # rewards [i] = 1.0 * (old_diff - new_diff)
+
+            self.deploy += [(self.lut.apply (self.raw), self.rasterize (self.ref_lut.apply (self.ref)))]
 
         self.actions.append (self.action)
         rewards /= color_step

@@ -131,6 +131,7 @@ def test_func (args, shared_model, env_conf, datasets):
         reward_sum += player.reward.mean ()
         renderlist.append (player.env.render ()) 
 
+
         if player.done:
             flag = True
             num_tests += 1
@@ -170,6 +171,7 @@ def test_func (args, shared_model, env_conf, datasets):
                     img = img [None]
                     logger.image_summary (tag, img, num_tests)
 
+
                 if not args.deploy:
                     log_info = {
                         'mean_valid_reward': reward_mean,
@@ -179,6 +181,10 @@ def test_func (args, shared_model, env_conf, datasets):
                     for tag, value in log_info.items ():
                         logger.scalar_summary (tag, value, num_tests)
 
+            deploy_list = player.env.deploy
+            for vol, ref_img in deploy_list:
+                io.imsave (args.log_dir + "/" + str (num_tests) + "_vol.tif", vol)
+                io.imsave (args.log_dir + "/" + str (num_tests) + "_ref.tif", ref_img)
             renderlist = []
             reward_sum = 0
             player.eps_len = 0            
