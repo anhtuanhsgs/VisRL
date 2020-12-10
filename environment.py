@@ -131,11 +131,9 @@ class Debug_env (General_env):
         self.rng.seed (10)
 
         if not self.is3D:
-            nactions = np.zeros ([self.num_actions * 3], dtype=np.float32)
+            nactions = self.num_actions * 3
         else:
-            nactions = np.zeros ([self.num_actions * 4], dtype=np.float32)
-
-        print (nactions)
+            nactions = self.num_actions * 4
 
         for j in range (self.T):
             actions = [1] * nactions
