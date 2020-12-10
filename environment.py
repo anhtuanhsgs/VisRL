@@ -150,7 +150,7 @@ class Debug_env (General_env):
                     if self.rng.rand () > 0.8:
                         actions [j] = 2
 
-        self.step (actions)
+            self.step (actions)
         ret = copy.deepcopy (self.deploy)
         self.reset ()
         return ret
