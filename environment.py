@@ -134,8 +134,8 @@ class Debug_env (General_env):
         self.ref = copy.deepcopy (self.raw_list [idx])
         self.raw = copy.deepcopy (self.raw_list [idx])
 
-        self.ref, self.raw = self.aug3D ([self.ref, self.raw])
-        # self.ref = self.aug3D ([self.ref]) [0]
+        # self.ref, self.raw = self.aug3D ([self.ref, self.raw])
+        self.ref = self.aug3D ([self.ref]) [0]
 
         self.lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.lut_init)
         self.ref_lut = LUT (rng=self.rng, n=self.num_actions, color_step=self.color_step, is3D=self.is3D, initial=self.ref_lut_init)
