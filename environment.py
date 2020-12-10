@@ -134,9 +134,9 @@ class Debug_env (General_env):
             nactions = self.num_actions * 3
         else:
             nactions = self.num_actions * 4
-        print (nactions)
+
         for j in range (self.T):
-            actions = [1] * nactions
+            actions = [1] * nactions 
             for i in range (len (actions)):
                 if not self.is3D:
                     idx, c = i//3, i%3
@@ -145,10 +145,10 @@ class Debug_env (General_env):
 
                 if self.lut.table [idx][c] > self.ref_lut.table [idx][c]:
                     if self.rng.rand () > 0.1:
-                        actions [j] = 0
+                        actions [i] = 0
                 if self.lut.table [idx][c] < self.ref_lut.table [idx][c]:
                     if self.rng.rand () > 0.1:
-                        actions [j] = 2
+                        actions [i] = 2
 
             self.step (actions)
         ret = copy.deepcopy (self.deploy)
@@ -243,8 +243,6 @@ class Debug_env (General_env):
                             self.rasterize (self.ref_lut.apply (self.ref)), 
                             copy.deepcopy (self.lut.table), 
                             copy.deepcopy (self.ref_lut.table))]
-
-        print (rewards)
 
         self.actions.append (self.action)
         rewards /= color_step
