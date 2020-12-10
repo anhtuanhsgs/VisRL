@@ -164,9 +164,9 @@ class Debug_env (General_env):
         self.actions = []
         self.deploy = [
                         (self.lut.apply (self.raw), 
-                        self.rasterize (self.ref_lut.apply (self.ref))),
+                        self.rasterize (self.ref_lut.apply (self.ref)),
                         copy.deepcopy (self.lut.table),
-                        copy.deepcopy (self.ref_lut.table),
+                        copy.deepcopy (self.ref_lut.table),)
                     ]
 
         self.reset_end ()
@@ -211,7 +211,7 @@ class Debug_env (General_env):
             # rewards [i] = 1.0 * (old_diff - new_diff)
 
             self.deploy += [(self.lut.apply (self.raw), 
-                                self.rasterize (self.ref_lut.apply (self.ref))), copy.deepcopy (self.lut), copy.deepcopy (self.ref_lut)]
+                                self.rasterize (self.ref_lut.apply (self.ref)), copy.deepcopy (self.lut.table), copy.deepcopy (self.ref_lut.table))]
 
         self.actions.append (self.action)
         rewards /= color_step
