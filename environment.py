@@ -187,6 +187,7 @@ class Debug_env (General_env):
         if self.alpha_only:
             self.sum_rewards = np.zeros ([self.num_actions], dtype=np.float32)
         self.rewards = []
+
         self.step_cnt = 0
         self.actions = []
         self.deploy = [
@@ -242,6 +243,8 @@ class Debug_env (General_env):
                             self.rasterize (self.ref_lut.apply (self.ref)), 
                             copy.deepcopy (self.lut.table), 
                             copy.deepcopy (self.ref_lut.table))]
+
+        print (rewards)
 
         self.actions.append (self.action)
         rewards /= color_step
