@@ -68,7 +68,7 @@ class LUT ():
                 
                 if not self.alpha_only:
                     # Full mod
-                    mod = self.rng.randint (-256, 256)
+                    mod = self.rng.randint (-128, 128)
                     self.table [r][c] += mod 
                     self.table [r][c] = self.rng.choice  (list (range (0, 256)), 1) [0]  
                 
